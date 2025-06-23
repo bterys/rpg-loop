@@ -1,288 +1,263 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue'
-import { useGameStore } from './stores'
+import { onMounted, computed } from "vue";
+import { useGameStore } from "./stores";
+import {
+  EquipmentType,
+  CurrencyNames,
+  ChestData,
+  RarityData,
+  MapData,
+} from "./stores";
+import {
+  NConfigProvider,
+  NMessageProvider,
+  NCard,
+  NGrid,
+  NGridItem,
+  NSpace,
+  NStatistic,
+  NDataTable,
+  NTag,
+  NButton,
+  useMessage,
+} from "naive-ui";
 
-const gameStore = useGameStore()
-// const message = useMessage()
+const gameStore = useGameStore();
+// const message = useMessage();
 
 // 组件挂载时尝试加载存档
 onMounted(() => {
-  const loaded = gameStore.loadGame()
+  const loaded = gameStore.loadGame();
   if (loaded) {
-    // message.success('游戏存档加载成功')
+    // message.success("游戏存档加载成功");
+    gameStore.init(); // 初始化游戏状态
   }
-})
+});
 
 // 游戏状态标签类型
 const gameStatusType = computed(() => {
-  if (!gameStore.isGameRunning) return 'default'
-  if (gameStore.isPaused) return 'warning'
-  return 'success'
-})
+  if (!gameStore.isGameRunning) return "default";
+  if (gameStore.isPaused) return "warning";
+  return "success";
+});
 
 const gameStatusText = computed(() => {
-  if (!gameStore.isGameRunning) return '未开始'
-  if (gameStore.isPaused) return '已暂停'
-  return '运行中'
-})
+  if (!gameStore.isGameRunning) return "未开始";
+  if (gameStore.isPaused) return "已暂停";
+  return "运行中";
+});
 
 // 测试功能
 const testGainExp = () => {
-  gameStore.gainExperience(50)
-  message.info('获得经验 +50')
-}
+  gameStore.gainExperience(50);
+  message.info("获得经验 +50");
+};
 
 const testTakeDamage = () => {
-  gameStore.takeDamage(20)
-  message.warning('受到伤害 -20')
-}
+  gameStore.takeDamage(20);
+  message.warning("受到伤害 -20");
+};
 
 const testGainGold = () => {
-  gameStore.gainGold(100)
-  message.success('获得金币 +100')
-}
+  gameStore.gainGold(100);
+  message.success("获得金币 +100");
+};
 
 const handleSaveGame = () => {
-  const success = gameStore.saveGame()
+  const success = gameStore.saveGame();
   if (success) {
-    message.success('游戏保存成功')
+    message.success("游戏保存成功");
   } else {
-    message.error('游戏保存失败')
+    message.error("游戏保存失败");
   }
-}
+};
 
 const handleLoadGame = () => {
-  const success = gameStore.loadGame()
+  const success = gameStore.loadGame();
   if (success) {
-    message.success('游戏加载成功')
+    message.success("游戏加载成功");
   } else {
-    message.error('没有找到存档')
+    message.error("没有找到存档");
   }
-}
+};
 
 const handleDeleteSave = () => {
-  const success = gameStore.deleteSave()
+  const success = gameStore.deleteSave();
   if (success) {
-    message.success('存档删除成功')
+    message.success("存档删除成功");
   } else {
-    message.error('删除存档失败')
+    message.error("删除存档失败");
   }
-}
+};
 
 const handleResetGame = () => {
-  gameStore.resetGame()
-  message.info('游戏已重置')
-}
+  gameStore.resetGame();
+  message.info("游戏已重置");
+};
 
 const handleStartNewLoop = () => {
-  gameStore.startNewLoop()
-  message.info('开始新循环')
-}
+  gameStore.startNewLoop();
+  message.info("开始新循环");
+};
 </script>
 
 <template>
-  <n-message-provider>
-    <div class="app">
-    <div class="header">
-      <h1>RPG Loop Game</h1>
-    </div>
+  <n-config-provider>
+    <!-- <n-message-provider> -->
+      <div class="app">
+        <div class="header">
+          <!-- <h1>RPG Loop Game</h1> -->
+          <n-button @click="gameStore.init()">init()</n-button>
+        </div>
 
-    <div class="main">
-      <n-grid :cols="2" :x-gap="20" :y-gap="20" responsive="screen">
-        <!-- 玩家信息面板 -->
-        <n-grid-item>
-          <n-card title="玩家信息" size="large">
-            <n-space vertical size="large">
-              <!-- 基本信息 -->
-              <n-grid :cols="2" :x-gap="12" :y-gap="12">
-                <n-grid-item>
-                  <n-statistic label="姓名" :value="gameStore.player.name" />
-                </n-grid-item>
-                <n-grid-item>
-                  <n-statistic label="等级" :value="gameStore.player.level" />
-                </n-grid-item>
-                <n-grid-item>
-                  <n-statistic label="金币" :value="gameStore.player.gold" />
-                </n-grid-item>
-                <n-grid-item>
-                  <n-statistic label="总属性" :value="gameStore.totalStats" />
-                </n-grid-item>
-              </n-grid>
-
-              <!-- 进度条 -->
-              <n-space vertical>
-                <div>
-                  <div class="progress-label">
-                    经验值: {{ gameStore.player.experience }} / {{ gameStore.player.experienceToNext }}
-                  </div>
-                  <n-progress 
-                    type="line" 
-                    :percentage="gameStore.experienceProgress" 
-                    :show-indicator="false"
-                    color="#18a058"
+        <div class="main">
+          <n-grid :cols="5" :x-gap="10" :y-gap="10" responsive="screen">
+            <!-- 玩家信息面板 -->
+            <n-grid-item span="1">
+              <n-card title="玩家信息" size="large">
+                <n-space vertical size="large">
+                  <!-- 基本信息 -->
+                  <n-grid :cols="2" :x-gap="12" :y-gap="12">
+                    <n-grid-item>
+                      <n-statistic
+                        label="等级"
+                        :value="gameStore.player.level"
+                      />
+                    </n-grid-item>
+                    <n-grid-item>
+                      <n-statistic
+                        label="战力"
+                        :value="gameStore.player.power"
+                      />
+                    </n-grid-item>
+                  </n-grid>
+                  <n-grid :cols="3" :x-gap="12" :y-gap="12">
+                    <n-grid-item>
+                      <n-statistic label="攻击" :value="gameStore.player.atk" />
+                    </n-grid-item>
+                    <n-grid-item>
+                      <n-statistic label="防御" :value="gameStore.player.def" />
+                    </n-grid-item>
+                    <n-grid-item>
+                      <n-statistic label="体力" :value="gameStore.player.hp" />
+                    </n-grid-item>
+                  </n-grid>
+                  <!-- moneies -->
+                  <!-- <n-grid :cols="1" :x-gap="12" :y-gap="12"> -->
+                  <n-data-table
+                    :columns="[
+                      { title: '类型', key: 'name' },
+                      { title: '数量', key: 'amount', align: 'right' },
+                    ]"
+                    :data="
+                      CurrencyNames.map((currency, idx) => ({
+                        name: currency,
+                        amount: gameStore.player.moneies[idx] | 0,
+                      }))
+                    "
+                    :pagination="false"
+                    size="small"
                   />
-                </div>
-
-                <div>
-                  <div class="progress-label">
-                    生命值: {{ gameStore.player.health }} / {{ gameStore.player.maxHealth }}
-                  </div>
-                  <n-progress 
-                    type="line" 
-                    :percentage="gameStore.healthPercentage" 
-                    :show-indicator="false"
-                    color="#d03050"
-                  />
-                </div>
-
-                <div>
-                  <div class="progress-label">
-                    法力值: {{ gameStore.player.mana }} / {{ gameStore.player.maxMana }}
-                  </div>
-                  <n-progress 
-                    type="line" 
-                    :percentage="gameStore.manaPercentage" 
-                    :show-indicator="false"
-                    color="#2080f0"
-                  />
-                </div>
-              </n-space>
-
-              <!-- 属性统计 -->
-              <div>
-                <n-divider title-placement="left">属性点</n-divider>
+                  <!-- </n-grid> -->
+                </n-space>
+              </n-card>
+            </n-grid-item>
+            <!-- 地图信息 -->
+            <n-grid-item span="1">
+              <n-card title="怪物信息" size="large" v-if="gameStore.monster">
+                <n-progress type="line" :percentage="gameStore.other.time/50" :show-indicator="false" />
+                <!-- 基本信息 -->
                 <n-grid :cols="2" :x-gap="12" :y-gap="12">
                   <n-grid-item>
-                    <n-statistic label="力量" :value="gameStore.player.stats.strength" />
+                    <n-statistic
+                      label="等级"
+                      :value="gameStore.monster.level"
+                    />
                   </n-grid-item>
                   <n-grid-item>
-                    <n-statistic label="敏捷" :value="gameStore.player.stats.agility" />
-                  </n-grid-item>
-                  <n-grid-item>
-                    <n-statistic label="智力" :value="gameStore.player.stats.intelligence" />
-                  </n-grid-item>
-                  <n-grid-item>
-                    <n-statistic label="体质" :value="gameStore.player.stats.vitality" />
+                    <n-statistic
+                      label="战力"
+                      :value="gameStore.monster.power"
+                    />
                   </n-grid-item>
                 </n-grid>
-              </div>
-            </n-space>
-          </n-card>
-        </n-grid-item>
-
-        <!-- 游戏控制面板 -->
-        <n-grid-item>
-          <n-card title="游戏控制" size="large">
-            <n-space vertical size="large">
-              <!-- 游戏状态 -->
-              <n-grid :cols="2" :x-gap="12" :y-gap="12">
-                <n-grid-item>
-                  <n-statistic label="当前循环" :value="gameStore.currentLoop" />
-                </n-grid-item>
-                <n-grid-item>
-                  <n-statistic label="总循环数" :value="gameStore.totalLoops" />
-                </n-grid-item>
-                <n-grid-item>
-                  <n-statistic label="游戏速度" :value="gameStore.gameSpeed + 'x'" />
-                </n-grid-item>
-                <n-grid-item>
-                  <div>
-                    <div class="status-label">游戏状态</div>
-                    <n-tag :type="gameStatusType" size="medium">
-                      {{ gameStatusText }}
-                    </n-tag>
-                  </div>
-                </n-grid-item>
-              </n-grid>
-
-              <!-- 控制按钮 -->
-              <div>
-                <n-divider title-placement="left">游戏控制</n-divider>
-                <n-space>
-                  <n-button 
-                    type="primary" 
-                    @click="gameStore.startGame" 
-                    :disabled="gameStore.isGameRunning && !gameStore.isPaused"
-                  >
-                    开始游戏
-                  </n-button>
-                  <n-button 
-                    type="warning" 
-                    @click="gameStore.pauseGame" 
-                    :disabled="!gameStore.isGameRunning || gameStore.isPaused"
-                  >
-                    暂停
-                  </n-button>
-                  <n-button 
-                    type="info" 
-                    @click="gameStore.resumeGame" 
-                    :disabled="!gameStore.isPaused"
-                  >
-                    继续
-                  </n-button>
-                  <n-button 
-                    @click="gameStore.stopGame" 
-                    :disabled="!gameStore.isGameRunning"
-                  >
-                    停止
-                  </n-button>
-                  <n-button 
-                    type="error" 
-                    @click="handleResetGame"
-                  >
-                    重置游戏
-                  </n-button>
+                <n-grid :cols="3" :x-gap="12" :y-gap="12">
+                  <n-grid-item>
+                    <n-statistic label="攻击" :value="gameStore.monster.atk" />
+                  </n-grid-item>
+                  <n-grid-item>
+                    <n-statistic label="防御" :value="gameStore.monster.def" />
+                  </n-grid-item>
+                  <n-grid-item>
+                    <n-statistic label="体力" :value="gameStore.monster.hp" />
+                  </n-grid-item>
+                </n-grid>
+              </n-card>
+              <n-card title="地图信息" size="large">
+                <n-space vertical size="large">
+                  <n-space vertical>
+                    <div v-for="map in MapData" :key="map.id">
+                      <n-tag
+                        :type="
+                          map.id === gameStore.mapNow ? 'success' : 'default'
+                        "
+                        size="large"
+                      >
+                        <span
+                          @click="gameStore.changeMap(map.id)"
+                          style="cursor: pointer"
+                        >
+                          {{ map.name }} (Lv.{{ map.level[0] }}-{{
+                            map.level[1]
+                          }})
+                        </span>
+                      </n-tag>
+                    </div>
+                  </n-space>
                 </n-space>
-              </div>
-
-              <!-- 测试功能 -->
-              <div>
-                <n-divider title-placement="left">测试功能</n-divider>
-                <n-space>
-                  <n-button type="success" @click="testGainExp">
-                    获得经验 (+50)
-                  </n-button>
-                  <n-button type="error" @click="testTakeDamage">
-                    受到伤害 (-20)
-                  </n-button>
-                  <n-button type="warning" @click="testGainGold">
-                    获得金币 (+100)
-                  </n-button>
-                  <n-button type="info" @click="handleStartNewLoop">
-                    开始新循环
-                  </n-button>
+              </n-card>
+            </n-grid-item>
+            <!-- 装备信息 -->
+            <n-grid-item span="2">
+              <n-card title="装备信息" size="large">
+                <n-space vertical size="large">
+                  <n-data-table
+                    :columns="[
+                      { title: '部位', key: 'type' },
+                      { title: '名称', key: 'name' },
+                      { title: '品质', key: 'rarity' },
+                      { title: '等级', key: 'level', align: 'right' },
+                      { title: '攻击', key: 'atk', align: 'right' },
+                      { title: '防御', key: 'def', align: 'right' },
+                      { title: '体力', key: 'hp', align: 'right' },
+                    ]"
+                    :data="
+                      Object.values(EquipmentType).map((type) => {
+                        const equipment = gameStore.equipments[type];
+                        return {
+                          type: type,
+                          name: equipment?.name || '未装备',
+                          rarity: equipment?.rarity
+                            ? RarityData[equipment.rarity]?.name || '未知'
+                            : '-',
+                          level: equipment?.level || 0,
+                          atk: equipment?.atk || 0,
+                          def: equipment?.def || 0,
+                          hp: equipment?.hp || 0,
+                        };
+                      })
+                    "
+                    :pagination="false"
+                    size="small"
+                  />
                 </n-space>
-              </div>
-
-              <!-- 存档管理 -->
-              <div>
-                <n-divider title-placement="left">存档管理</n-divider>
-                <n-space vertical>
-                  <n-button-group>
-                    <n-button type="primary" @click="handleSaveGame">
-                      保存游戏
-                    </n-button>
-                    <n-button @click="handleLoadGame">
-                      加载游戏
-                    </n-button>
-                    <n-button type="error" @click="handleDeleteSave">
-                      删除存档
-                    </n-button>
-                  </n-button-group>
-                  
-                  <div class="auto-save-switch">
-                    <span>自动保存:</span>
-                    <n-switch v-model:value="gameStore.autoSave" />
-                  </div>
-                </n-space>
-              </div>
-            </n-space>
-          </n-card>
-        </n-grid-item>
-      </n-grid>
-    </div>
-  </div>
-  </n-message-provider>
+              </n-card>
+            </n-grid-item>
+          </n-grid>
+        </div>
+      </div>
+    <!-- </n-message-provider> -->
+  </n-config-provider>
 </template>
 
 <style scoped>
@@ -300,7 +275,7 @@ const handleStartNewLoop = () => {
 .header h1 {
   color: white;
   font-size: 2.5rem;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   margin: 0;
   font-weight: 700;
 }
@@ -339,7 +314,7 @@ const handleStartNewLoop = () => {
   .app {
     padding: 15px;
   }
-  
+
   .header h1 {
     font-size: 2rem;
   }
@@ -349,7 +324,7 @@ const handleStartNewLoop = () => {
 :deep(.n-card) {
   backdrop-filter: blur(10px);
   background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 :deep(.n-statistic .n-statistic-value) {

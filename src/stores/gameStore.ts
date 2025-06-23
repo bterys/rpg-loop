@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const EquipmentType = {
   0: "souvenir", // 纪念品
-  1: "Weapon",// 主手武器
+  1: "Weapon", // 主手武器
   2: "OffHand", // 副手
   3: "Armor", // 护甲
   4: "Accessory", // 饰品
@@ -87,46 +87,510 @@ export const CurrencyNames = [
   "万能币", // 39
 ] as const;
 export const ChestData: Chest[] = [
-  { id: 0, name: "破旧的木箱", price: 10, currency: 0, openTime: 1000, rarityWeight: [90, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3] },
-  { id: 1, name: "普通宝箱", price: 100, currency: 0, openTime: 2000, rarityWeight: [70, 25, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5] },
-  { id: 2, name: "精制宝箱", price: 500, currency: 0, openTime: 3000, rarityWeight: [50, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7] },
-  { id: 3, name: "银色宝箱", price: 50, currency: 1, openTime: 4000, rarityWeight: [30, 40, 25, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9] },
-  { id: 4, name: "黄金宝箱", price: 100, currency: 1, openTime: 5000, rarityWeight: [20, 35, 30, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
-  { id: 5, name: "白金宝箱", price: 10, currency: 2, openTime: 6000, rarityWeight: [10, 25, 35, 25, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] },
-  { id: 6, name: "钻石宝箱", price: 50, currency: 2, openTime: 7000, rarityWeight: [5, 15, 30, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] },
-  { id: 7, name: "翡翠宝箱", price: 100, currency: 2, openTime: 8000, rarityWeight: [0, 10, 25, 40, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17] },
-  { id: 8, name: "紫水晶宝箱", price: 10, currency: 3, openTime: 9000, rarityWeight: [0, 5, 20, 35, 35, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 9, name: "黄玉宝箱", price: 50, currency: 3, openTime: 10000, rarityWeight: [0, 0, 15, 30, 40, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 10, name: "红宝石宝箱", price: 100, currency: 3, openTime: 12000, rarityWeight: [0, 0, 10, 25, 35, 25, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 11, name: "蓝宝石宝箱", price: 10, currency: 4, openTime: 15000, rarityWeight: [0, 0, 5, 20, 30, 30, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 12, name: "祖母绿宝箱", price: 50, currency: 4, openTime: 18000, rarityWeight: [0, 0, 0, 15, 25, 35, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 13, name: "月光石宝箱", price: 100, currency: 4, openTime: 20000, rarityWeight: [0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 14, name: "日耀石宝箱", price: 10, currency: 5, openTime: 25000, rarityWeight: [0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 15, name: "星辰宝箱", price: 50, currency: 5, openTime: 30000, rarityWeight: [0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 16, name: "秘银宝箱", price: 100, currency: 5, openTime: 35000, rarityWeight: [0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 17, name: "精金宝箱", price: 10, currency: 6, openTime: 40000, rarityWeight: [0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 18, name: "奥术宝箱", price: 50, currency: 6, openTime: 45000, rarityWeight: [0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 19, name: "传说宝箱", price: 100, currency: 6, openTime: 50000, rarityWeight: [0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 20, name: "神话宝箱", price: 10, currency: 7, openTime: 60000, rarityWeight: [0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 21, name: "创世宝箱", price: 50, currency: 7, openTime: 70000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 22, name: "混沌宝箱", price: 100, currency: 7, openTime: 80000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 23, name: "无限宝箱", price: 10, currency: 8, openTime: 90000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 24, name: "永恒宝箱", price: 50, currency: 8, openTime: 100000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 25, name: "天使宝箱", price: 100, currency: 8, openTime: 120000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 26, name: "恶魔宝箱", price: 10, currency: 9, openTime: 140000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 27, name: "龙王宝箱", price: 50, currency: 9, openTime: 160000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 28, name: "凤凰宝箱", price: 100, currency: 9, openTime: 180000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 29, name: "麒麟宝箱", price: 10, currency: 10, openTime: 200000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 30, name: "圣灵宝箱", price: 50, currency: 10, openTime: 250000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 31, name: "时空宝箱", price: 100, currency: 10, openTime: 300000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 32, name: "虚空宝箱", price: 10, currency: 11, openTime: 350000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 33, name: "光明宝箱", price: 50, currency: 11, openTime: 400000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 34, name: "黑暗宝箱", price: 100, currency: 11, openTime: 450000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 35, name: "命运宝箱", price: 10, currency: 12, openTime: 500000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 36, name: "毁灭宝箱", price: 50, currency: 12, openTime: 600000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 37, name: "创造宝箱", price: 100, currency: 12, openTime: 700000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 38, name: "终极宝箱", price: 10, currency: 13, openTime: 800000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
-  { id: 39, name: "至尊宝箱", price: 100, currency: 13, openTime: 1000000, rarityWeight: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 40], equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] },
+  {
+    id: 0,
+    name: "破旧的木箱",
+    price: 10,
+    currency: 0,
+    openTime: 1000,
+    rarityWeight: [
+      90, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [1, 2, 3],
+  },
+  {
+    id: 1,
+    name: "普通宝箱",
+    price: 100,
+    currency: 0,
+    openTime: 2000,
+    rarityWeight: [
+      70, 25, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [1, 2, 3, 4, 5],
+  },
+  {
+    id: 2,
+    name: "精制宝箱",
+    price: 500,
+    currency: 0,
+    openTime: 3000,
+    rarityWeight: [
+      50, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [1, 2, 3, 4, 5, 6, 7],
+  },
+  {
+    id: 3,
+    name: "银色宝箱",
+    price: 50,
+    currency: 1,
+    openTime: 4000,
+    rarityWeight: [
+      30, 40, 25, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+  },
+  {
+    id: 4,
+    name: "黄金宝箱",
+    price: 100,
+    currency: 1,
+    openTime: 5000,
+    rarityWeight: [
+      20, 35, 30, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+  },
+  {
+    id: 5,
+    name: "白金宝箱",
+    price: 10,
+    currency: 2,
+    openTime: 6000,
+    rarityWeight: [
+      10, 25, 35, 25, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+  },
+  {
+    id: 6,
+    name: "钻石宝箱",
+    price: 50,
+    currency: 2,
+    openTime: 7000,
+    rarityWeight: [
+      5, 15, 30, 35, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+  },
+  {
+    id: 7,
+    name: "翡翠宝箱",
+    price: 100,
+    currency: 2,
+    openTime: 8000,
+    rarityWeight: [
+      0, 10, 25, 40, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+  },
+  {
+    id: 8,
+    name: "紫水晶宝箱",
+    price: 10,
+    currency: 3,
+    openTime: 9000,
+    rarityWeight: [
+      0, 5, 20, 35, 35, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 9,
+    name: "黄玉宝箱",
+    price: 50,
+    currency: 3,
+    openTime: 10000,
+    rarityWeight: [
+      0, 0, 15, 30, 40, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 10,
+    name: "红宝石宝箱",
+    price: 100,
+    currency: 3,
+    openTime: 12000,
+    rarityWeight: [
+      0, 0, 10, 25, 35, 25, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 11,
+    name: "蓝宝石宝箱",
+    price: 10,
+    currency: 4,
+    openTime: 15000,
+    rarityWeight: [
+      0, 0, 5, 20, 30, 30, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 12,
+    name: "祖母绿宝箱",
+    price: 50,
+    currency: 4,
+    openTime: 18000,
+    rarityWeight: [
+      0, 0, 0, 15, 25, 35, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 13,
+    name: "月光石宝箱",
+    price: 100,
+    currency: 4,
+    openTime: 20000,
+    rarityWeight: [
+      0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 14,
+    name: "日耀石宝箱",
+    price: 10,
+    currency: 5,
+    openTime: 25000,
+    rarityWeight: [
+      0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 15,
+    name: "星辰宝箱",
+    price: 50,
+    currency: 5,
+    openTime: 30000,
+    rarityWeight: [
+      0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 16,
+    name: "秘银宝箱",
+    price: 100,
+    currency: 5,
+    openTime: 35000,
+    rarityWeight: [
+      0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 17,
+    name: "精金宝箱",
+    price: 10,
+    currency: 6,
+    openTime: 40000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 18,
+    name: "奥术宝箱",
+    price: 50,
+    currency: 6,
+    openTime: 45000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 19,
+    name: "传说宝箱",
+    price: 100,
+    currency: 6,
+    openTime: 50000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 20,
+    name: "神话宝箱",
+    price: 10,
+    currency: 7,
+    openTime: 60000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 21,
+    name: "创世宝箱",
+    price: 50,
+    currency: 7,
+    openTime: 70000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 22,
+    name: "混沌宝箱",
+    price: 100,
+    currency: 7,
+    openTime: 80000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 23,
+    name: "无限宝箱",
+    price: 10,
+    currency: 8,
+    openTime: 90000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 24,
+    name: "永恒宝箱",
+    price: 50,
+    currency: 8,
+    openTime: 100000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 25,
+    name: "天使宝箱",
+    price: 100,
+    currency: 8,
+    openTime: 120000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 26,
+    name: "恶魔宝箱",
+    price: 10,
+    currency: 9,
+    openTime: 140000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 27,
+    name: "龙王宝箱",
+    price: 50,
+    currency: 9,
+    openTime: 160000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 28,
+    name: "凤凰宝箱",
+    price: 100,
+    currency: 9,
+    openTime: 180000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 29,
+    name: "麒麟宝箱",
+    price: 10,
+    currency: 10,
+    openTime: 200000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 30,
+    name: "圣灵宝箱",
+    price: 50,
+    currency: 10,
+    openTime: 250000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 31,
+    name: "时空宝箱",
+    price: 100,
+    currency: 10,
+    openTime: 300000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 32,
+    name: "虚空宝箱",
+    price: 10,
+    currency: 11,
+    openTime: 350000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 33,
+    name: "光明宝箱",
+    price: 50,
+    currency: 11,
+    openTime: 400000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 34,
+    name: "黑暗宝箱",
+    price: 100,
+    currency: 11,
+    openTime: 450000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 35,
+    name: "命运宝箱",
+    price: 10,
+    currency: 12,
+    openTime: 500000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 36,
+    name: "毁灭宝箱",
+    price: 50,
+    currency: 12,
+    openTime: 600000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20, 0,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 37,
+    name: "创造宝箱",
+    price: 100,
+    currency: 12,
+    openTime: 700000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 30, 10,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 38,
+    name: "终极宝箱",
+    price: 10,
+    currency: 13,
+    openTime: 800000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 15, 25, 35, 20,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
+  {
+    id: 39,
+    name: "至尊宝箱",
+    price: 100,
+    currency: 13,
+    openTime: 1000000,
+    rarityWeight: [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 30, 40,
+    ],
+    equipmentTypes: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+  },
 ] as const;
 export const RarityData = [
   { id: 0, name: "破损", color: "#8B4513", rand: [] }, // 棕色
@@ -151,16 +615,27 @@ export const RarityData = [
   { id: 19, name: "万古", color: "#FF6347", rand: [] }, // 番茄色
 ] as const;
 export const MapData: Map[] = [
-  { id: 0, name: "新手村", level: [1, 5] },
-  { id: 1, name: "幽暗森林", level: [5, 15] },
-  { id: 2, name: "荒芜沙漠", level: [15, 30] },
-  { id: 3, name: "冰霜雪原", level: [30, 50] },
-  { id: 4, name: "火焰山脉", level: [50, 75] },
-  { id: 5, name: "深海遗迹", level: [75, 100] },
-  { id: 6, name: "天空之城", level: [100, 150] },
-  { id: 7, name: "暗影峡谷", level: [150, 200] },
-  { id: 8, name: "龙族禁地", level: [200, 300] },
-  { id: 9, name: "虚空神殿", level: [300, 500] }
+  { id: 0, name: "新手村", level: [1, 3] },
+  { id: 1, name: "青草平原", level: [3, 8] },
+  { id: 2, name: "幽暗森林", level: [8, 15] },
+  { id: 3, name: "荒芜沙漠", level: [15, 25] },
+  { id: 4, name: "冰霜雪原", level: [25, 40] },
+  { id: 5, name: "火焰山脉", level: [40, 60] },
+  { id: 6, name: "深海遗迹", level: [60, 90] },
+  { id: 7, name: "天空之城", level: [90, 120] },
+  { id: 8, name: "暗影峡谷", level: [120, 160] },
+  { id: 9, name: "龙族禁地", level: [160, 200] },
+  { id: 10, name: "虚空神殿", level: [200, 260] },
+  { id: 11, name: "星陨废墟", level: [260, 320] },
+  { id: 12, name: "时间裂隙", level: [320, 400] },
+  { id: 13, name: "元素风暴", level: [400, 500] },
+  { id: 14, name: "古神陵墓", level: [500, 620] },
+  { id: 15, name: "混沌领域", level: [620, 750] },
+  { id: 16, name: "永恒战场", level: [750, 900] },
+  { id: 17, name: "创世熔炉", level: [900, 1080] },
+  { id: 18, name: "终焉深渊", level: [1080, 1300] },
+  { id: 19, name: "天界之门", level: [1300, 1550] },
+  { id: 20, name: "无尽虚空", level: [1550, 1850] },
 ] as const;
 
 // 定义玩家状态接口
@@ -206,13 +681,14 @@ export interface GameState {
   mapNow: number; // 当前地图ID
   monster?: Monster; // 当前怪物
   log: string[]; // 游戏日志
+  other: any;
 }
 // 定义稀有度接口
 export interface Rarity {
   id: number; // 稀有度ID
   name: string; // 稀有度名称
   color: string; // 稀有度颜色
-  rand: []
+  rand: [];
 }
 // 定义宝箱接口
 export interface Chest {
@@ -253,25 +729,27 @@ export const useGameStore = defineStore("game", {
     autoSave: true,
     lastSaveTime: Date.now(),
     equipments: [],
-    mapNow: 0,
+    mapNow: -1,
     log: [],
     monster: undefined, // 当前怪物
+    other: {},
   }),
 
-  getters: {
-    
-  },
+  getters: {},
 
   actions: {
     // 进入地图
-    enterMap(mapId: number) {
+    changeMap(mapId: number) {
+      if (this.mapNow === mapId) {
+        console.log("已经在该地图中");
+        return true; // 已经在该地图中
+      }
       // 检查地图是否存在
-      const targetMap = MapData.find(map => map.id === mapId);
+      const targetMap = MapData.find((map) => map.id === mapId);
       if (!targetMap) {
         console.error("地图不存在");
         return false;
       }
-
       // 检查玩家等级是否符合要求
       // if (this.player.level < targetMap.level[0]) {
       //   console.error(`等级不足，需要 ${targetMap.level[0]} 级才能进入 ${targetMap.name}`);
@@ -286,7 +764,7 @@ export const useGameStore = defineStore("game", {
     // 根据当前所在地图，生成一个怪物
     generateMonster() {
       // 根据当前地图ID生成怪物
-      const currentMap = MapData.find(map => map.id === this.mapNow);
+      const currentMap = MapData.find((map) => map.id === this.mapNow);
       if (!currentMap) {
         console.error("当前地图不存在");
         return null;
@@ -295,14 +773,22 @@ export const useGameStore = defineStore("game", {
       // 生成一个怪物（示例）
       const monster = {
         name: `怪物-${currentMap.name}`,
-        level: Math.floor(Math.random() * (currentMap.level[1] - currentMap.level[0] + 1)) + currentMap.level[0],
+        level:
+          Math.floor(
+            Math.random() * (currentMap.level[1] - currentMap.level[0] + 1)
+          ) + currentMap.level[0],
         hp: Math.floor(Math.random() * 20) + 10, // 随机生命值
         atk: Math.floor(Math.random() * 5) + 1, // 随机攻击力
-        power: 0
+        def: Math.floor(Math.random() * 3), // 随机防御力
+        power: 0,
       } as Monster;
       // 计算怪物的战力
       monster.power = this.calculatePower(monster.atk, 0, monster.hp);
       this.monster = monster; // 设置当前怪物
+      this.other.lastLoopTime = Date.now(); // 更新上次循环时间
+      this.other.time = 5000; // 重置时间
+      this.other.lastLoopTime = Date.now(); // 更新上次循环时间
+      this.log.push(`生成怪物：${monster.name}（等级：${monster.level}）`);
       return monster;
     },
     // 战力计算
@@ -316,14 +802,22 @@ export const useGameStore = defineStore("game", {
       // this.player.power = basePower + equipmentPower;
     },
     // 战斗逻辑
-    battle () {
+    battle() {
       // 玩家power和怪物power比对,
       if (!this.monster) {
         console.error("没有可战斗的怪物");
         return false;
       }
-      const playerPower = this.calculatePower(this.player.atk, this.player.def, this.player.hp);
-      const monsterPower = this.calculatePower(this.monster.atk, this.monster.def, this.monster.hp); // 怪物战力受等级影响
+      const playerPower = this.calculatePower(
+        this.player.atk,
+        this.player.def,
+        this.player.hp
+      );
+      const monsterPower = this.calculatePower(
+        this.monster.atk,
+        this.monster.def,
+        this.monster.hp
+      ); // 怪物战力受等级影响
       // 根据等级差计算战力修正系数
       const levelDifference = this.monster.level - this.player.level;
       let playerPowerModified = playerPower;
@@ -342,24 +836,27 @@ export const useGameStore = defineStore("game", {
         // 玩家胜利
         const expGain = 1;
         const goldGain = Math.floor(Math.random() * this.monster.level * 2) + 1;
-        
+
         this.gainExperience(expGain);
         this.gainGold(0, goldGain);
-        this.log.push(`战胜了 ${this.monster.name}，获得 ${expGain} 经验和 ${goldGain} 铜币`);
-        
+        this.log.push(
+          `战胜了 ${this.monster.name}，获得 ${expGain} 经验和 ${goldGain} 铜币`
+        );
+
         // 清除当前怪物
         this.monster = undefined;
         return true;
       } else {
         // 战斗失败
         this.log.push(`被 ${this.monster.name} 击败了`);
+        this.monster = undefined;
         return false;
       }
     },
     // 增加经验值
     gainExperience(amount: number) {
       this.player.exp += amount;
-      
+
       // 检查是否可以升级
       while (this.player.exp >= this.player.expMax) {
         // this.levelUp();
@@ -385,7 +882,33 @@ export const useGameStore = defineStore("game", {
       }
       return false;
     },
-    
+    init() {
+      console.log("游戏初始化");
+      if (this.other.intervalId) {
+        clearInterval(this.other.intervalId);
+      }
+      this.other.intervalId = setInterval(() => {
+        this.loop();
+      }, 1000 / 33);
+    },
+    loop() {
+      if (this.mapNow === -1) {
+        return;
+      }
+      if (this.isPaused) {
+        return; // 如果游戏暂停，则不执行任何操作
+      }
+      const dt = Date.now() - this.other.lastLoopTime;
+      this.other.lastLoopTime = Date.now(); // 更新上次循环时间
+      this.other.time = Math.max(0, this.other.time - dt); // 累加时间
+      if (!this.monster) {
+        this.generateMonster(); // 如果没有怪物，则生成一个新的怪物
+        return;
+      }
+      if (this.other.time <= 0) {
+        this.battle();
+      }
+    },
     // 切换自动保存
     toggleAutoSave() {
       this.autoSave = !this.autoSave;
@@ -420,7 +943,8 @@ export const useGameStore = defineStore("game", {
           if (gameData.player && typeof gameData.currentLoop === "number") {
             this.player = { ...defaultPlayer, ...gameData.player };
             this.equipments = gameData.equipments || [];
-            this.isPaused = gameData.isPaused !== undefined ? gameData.isPaused : false;
+            this.isPaused =
+              gameData.isPaused !== undefined ? gameData.isPaused : false;
             this.autoSave =
               gameData.autoSave !== undefined ? gameData.autoSave : true;
             this.lastSaveTime = gameData.lastSaveTime || Date.now();

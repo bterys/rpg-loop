@@ -4,7 +4,36 @@ import App from './App.vue'
 import { createPinia } from 'pinia'
 
 // Naive UI
-import naive from 'naive-ui'
+import {
+  // create naive ui
+  create,
+  // component
+  NButton,
+  NCard,
+  NConfigProvider,
+  NMessageProvider,
+  NGrid,
+  NGridItem,
+  NSpace,
+  NStatistic,
+  NDataTable,
+  NTag
+} from 'naive-ui'
+
+const naive = create({
+  components: [
+    NButton,
+    NCard,
+    NConfigProvider,
+    NMessageProvider,
+    NGrid,
+    NGridItem,
+    NSpace,
+    NStatistic,
+    NDataTable,
+    NTag
+  ]
+})
 
 const pinia = createPinia()
 const app = createApp(App)
