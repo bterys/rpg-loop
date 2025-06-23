@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+
 export const EquipmentType = {
   // 主手武器
   2: "OffHand", // 副手
@@ -20,7 +21,6 @@ export const EquipmentType = {
   18: "Talisman", // 护符
   19: "Medallion", // 奖章
 } as const;
-
 export const EquipmentTypeReverse = {
   Weapon: 1, // 主手武器
   OffHand: 2, // 副手
@@ -126,6 +126,30 @@ export const ChestNames = [
   "终极宝箱", // 38
   "至尊宝箱", // 39
 ] as const;
+export const RarityData = [
+  { id: 0, name: "破损", color: "#8B4513", rand: [] }, // 棕色
+  { id: 1, name: "普通", color: "#FFFFFF", rand: [] }, // 白色
+  { id: 2, name: "优秀", color: "#00FF00", rand: [] }, // 绿色
+  { id: 3, name: "精良", color: "#0080FF", rand: [] }, // 蓝色
+  { id: 4, name: "稀有", color: "#8000FF", rand: [] }, // 紫色
+  { id: 5, name: "史诗", color: "#FF8000", rand: [] }, // 橙色
+  { id: 6, name: "传说", color: "#FF0000", rand: [] }, // 红色
+  { id: 7, name: "神话", color: "#FFD700", rand: [] }, // 金色
+  { id: 8, name: "不朽", color: "#FF1493", rand: [] }, // 深粉色
+  { id: 9, name: "永恒", color: "#00FFFF", rand: [] }, // 青色
+  { id: 10, name: "神圣", color: "#FFFF00", rand: [] }, // 亮黄色
+  { id: 11, name: "混沌", color: "#800080", rand: [] }, // 深紫色
+  { id: 12, name: "创世", color: "#C0C0C0", rand: [] }, // 银色
+  { id: 13, name: "终极", color: "#4B0082", rand: [] }, // 靛蓝色
+  { id: 14, name: "超越", color: "#FF69B4", rand: [] }, // 热粉色
+  { id: 15, name: "至尊", color: "#DC143C", rand: [] }, // 深红色
+  { id: 16, name: "无双", color: "#9400D3", rand: [] }, // 紫罗兰色
+  { id: 17, name: "天命", color: "#FF4500", rand: [] }, // 橙红色
+  { id: 18, name: "宇宙", color: "#1E90FF", rand: [] }, // 道奇蓝
+  { id: 19, name: "万古", color: "#FF6347", rand: [] }, // 番茄色
+] as const;
+
+
 // 定义玩家状态接口
 export interface Player {
   name: string;
@@ -136,10 +160,15 @@ export interface Player {
   atk: number;
   def: number;
   power: number;
+  prestige: number;
   moneies: number[];
+  equipment?: Equipment[]; // 可选装备数组
 }
+// 定义装备接口
 export interface Equipment {
   type: number; // 使用 EquipmentType 枚举
+  level: number;
+  rarity: number; // 稀有度
   name: string;
   attr: string;
   value: number;
@@ -155,6 +184,21 @@ export interface GameState {
   autoSave: boolean;
   lastSaveTime: number;
 }
+// 定义稀有度接口
+export interface Rarity {
+  id: number; // 稀有度ID
+  name: string; // 稀有度名称
+  color: string; // 稀有度颜色
+  rand: []
+}
+// 定义宝箱接口
+export interface Chest {
+  id: number; // 宝箱ID
+  name: string; // 宝箱名称
+  price: number; // 宝箱价格
+  currency: number; // 使用的货币类型
+  contents: Equipment[]; // 宝箱内容物
+}
 
 // 默认玩家数据
 const defaultPlayer: Player = {
@@ -166,6 +210,7 @@ const defaultPlayer: Player = {
   atk: 1,
   def: 0,
   power: 0,
+  prestige: 0,
   moneies: new Array(50).fill(0),
 };
 
