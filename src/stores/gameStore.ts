@@ -178,13 +178,10 @@ export interface Equipment {
 // 定义游戏状态接口
 export interface GameState {
   player: Player;
-  currentLoop: number;
-  totalLoops: number;
-  isGameRunning: boolean;
   isPaused: boolean;
-  gameSpeed: number;
   autoSave: boolean;
   lastSaveTime: number;
+  equipments: Equipment[];
 }
 // 定义稀有度接口
 export interface Rarity {
