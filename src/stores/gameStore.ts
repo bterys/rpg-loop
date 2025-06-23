@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 
 export const EquipmentType = {
-  // 主手武器
+  0: "souvenir", // 纪念品
+  1: "Weapon",// 主手武器
   2: "OffHand", // 副手
   3: "Armor", // 护甲
   4: "Accessory", // 饰品
@@ -22,6 +23,7 @@ export const EquipmentType = {
   19: "Medallion", // 奖章
 } as const;
 export const EquipmentTypeReverse = {
+  souvenir: 0, // 纪念品
   Weapon: 1, // 主手武器
   OffHand: 2, // 副手
   Armor: 3, // 护甲
@@ -41,7 +43,7 @@ export const EquipmentTypeReverse = {
   Charm: 17, // 符咒
   Talisman: 18, // 护符
   Medallion: 19, // 奖章
-};
+} as const;
 export const CurrencyNames = [
   "铜币", // 0
   "银币", // 1
