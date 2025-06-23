@@ -620,9 +620,9 @@ export const MapData: Map[] = [
     name: "新手村", 
     level: [1, 3],
     drop: [
-      { currency: 0, amount: 1, weight: 100 },
-      { currency: 0, amount: 2, weight: 50 },
-      { currency: 0, amount: 3, weight: 20 }
+      { currency: 0, amount: 3, weight: 100 },
+      { currency: 0, amount: 5, weight: 50 },
+      { currency: 1, amount: 1, weight: 5 }
     ]
   },
   { 
@@ -630,9 +630,9 @@ export const MapData: Map[] = [
     name: "青草平原", 
     level: [3, 8],
     drop: [
-      { currency: 0, amount: 2, weight: 80 },
-      { currency: 0, amount: 5, weight: 40 },
-      { currency: 1, amount: 1, weight: 10 }
+      { currency: 0, amount: 5, weight: 80 },
+      { currency: 1, amount: 2, weight: 30 },
+      { currency: 1, amount: 3, weight: 15 }
     ]
   },
   { 
@@ -640,9 +640,10 @@ export const MapData: Map[] = [
     name: "幽暗森林", 
     level: [8, 15],
     drop: [
-      { currency: 0, amount: 5, weight: 70 },
-      { currency: 0, amount: 10, weight: 30 },
-      { currency: 1, amount: 1, weight: 20 }
+      { currency: 0, amount: 10, weight: 70 },
+      { currency: 1, amount: 3, weight: 40 },
+      { currency: 1, amount: 5, weight: 25 },
+      { currency: 2, amount: 1, weight: 8 }
     ]
   },
   { 
@@ -650,9 +651,10 @@ export const MapData: Map[] = [
     name: "荒芜沙漠", 
     level: [15, 25],
     drop: [
-      { currency: 0, amount: 10, weight: 60 },
-      { currency: 1, amount: 2, weight: 40 },
-      { currency: 1, amount: 5, weight: 15 }
+      { currency: 1, amount: 5, weight: 60 },
+      { currency: 1, amount: 8, weight: 40 },
+      { currency: 2, amount: 2, weight: 20 },
+      { currency: 2, amount: 3, weight: 10 }
     ]
   },
   { 
@@ -660,9 +662,10 @@ export const MapData: Map[] = [
     name: "冰霜雪原", 
     level: [25, 40],
     drop: [
-      { currency: 1, amount: 3, weight: 70 },
-      { currency: 1, amount: 8, weight: 25 },
-      { currency: 2, amount: 1, weight: 10 }
+      { currency: 1, amount: 8, weight: 70 },
+      { currency: 2, amount: 2, weight: 35 },
+      { currency: 2, amount: 4, weight: 20 },
+      { currency: 3, amount: 1, weight: 8 }
     ]
   },
   { 
@@ -670,9 +673,10 @@ export const MapData: Map[] = [
     name: "火焰山脉", 
     level: [40, 60],
     drop: [
-      { currency: 1, amount: 5, weight: 60 },
-      { currency: 1, amount: 12, weight: 30 },
-      { currency: 2, amount: 2, weight: 15 }
+      { currency: 1, amount: 12, weight: 60 },
+      { currency: 2, amount: 4, weight: 40 },
+      { currency: 2, amount: 8, weight: 25 },
+      { currency: 3, amount: 2, weight: 12 }
     ]
   },
   { 
@@ -680,9 +684,10 @@ export const MapData: Map[] = [
     name: "深海遗迹", 
     level: [60, 90],
     drop: [
-      { currency: 1, amount: 10, weight: 50 },
-      { currency: 2, amount: 3, weight: 40 },
-      { currency: 2, amount: 8, weight: 20 }
+      { currency: 2, amount: 6, weight: 50 },
+      { currency: 2, amount: 12, weight: 35 },
+      { currency: 3, amount: 3, weight: 25 },
+      { currency: 3, amount: 5, weight: 15 }
     ]
   },
   { 
@@ -690,9 +695,10 @@ export const MapData: Map[] = [
     name: "天空之城", 
     level: [90, 120],
     drop: [
-      { currency: 2, amount: 5, weight: 60 },
-      { currency: 2, amount: 15, weight: 25 },
-      { currency: 3, amount: 2, weight: 10 }
+      { currency: 2, amount: 10, weight: 60 },
+      { currency: 3, amount: 4, weight: 35 },
+      { currency: 3, amount: 8, weight: 25 },
+      { currency: 4, amount: 2, weight: 12 }
     ]
   },
   { 
@@ -700,9 +706,10 @@ export const MapData: Map[] = [
     name: "暗影峡谷", 
     level: [120, 160],
     drop: [
-      { currency: 2, amount: 8, weight: 50 },
-      { currency: 2, amount: 20, weight: 30 },
-      { currency: 3, amount: 5, weight: 15 }
+      { currency: 2, amount: 15, weight: 50 },
+      { currency: 3, amount: 8, weight: 40 },
+      { currency: 3, amount: 15, weight: 25 },
+      { currency: 4, amount: 3, weight: 15 }
     ]
   },
   { 
@@ -710,9 +717,10 @@ export const MapData: Map[] = [
     name: "龙族禁地", 
     level: [160, 200],
     drop: [
-      { currency: 2, amount: 15, weight: 40 },
-      { currency: 3, amount: 8, weight: 35 },
-      { currency: 3, amount: 15, weight: 20 }
+      { currency: 3, amount: 15, weight: 45 },
+      { currency: 3, amount: 25, weight: 35 },
+      { currency: 4, amount: 5, weight: 25 },
+      { currency: 4, amount: 8, weight: 18 }
     ]
   },
   { 
@@ -720,9 +728,10 @@ export const MapData: Map[] = [
     name: "虚空神殿", 
     level: [200, 260],
     drop: [
-      { currency: 3, amount: 10, weight: 50 },
-      { currency: 3, amount: 25, weight: 25 },
-      { currency: 4, amount: 3, weight: 10 }
+      { currency: 3, amount: 20, weight: 50 },
+      { currency: 4, amount: 6, weight: 35 },
+      { currency: 4, amount: 12, weight: 25 },
+      { currency: 5, amount: 2, weight: 12 }
     ]
   },
   { 
@@ -730,9 +739,10 @@ export const MapData: Map[] = [
     name: "星陨废墟", 
     level: [260, 320],
     drop: [
-      { currency: 3, amount: 20, weight: 40 },
-      { currency: 4, amount: 5, weight: 35 },
-      { currency: 4, amount: 12, weight: 20 }
+      { currency: 4, amount: 10, weight: 45 },
+      { currency: 4, amount: 18, weight: 35 },
+      { currency: 5, amount: 4, weight: 25 },
+      { currency: 5, amount: 8, weight: 18 }
     ]
   },
   { 
@@ -740,9 +750,10 @@ export const MapData: Map[] = [
     name: "时间裂隙", 
     level: [320, 400],
     drop: [
-      { currency: 4, amount: 8, weight: 50 },
-      { currency: 4, amount: 20, weight: 25 },
-      { currency: 5, amount: 4, weight: 15 }
+      { currency: 4, amount: 15, weight: 50 },
+      { currency: 5, amount: 8, weight: 35 },
+      { currency: 5, amount: 15, weight: 25 },
+      { currency: 6, amount: 3, weight: 15 }
     ]
   },
   { 
@@ -750,9 +761,10 @@ export const MapData: Map[] = [
     name: "元素风暴", 
     level: [400, 500],
     drop: [
-      { currency: 4, amount: 15, weight: 40 },
-      { currency: 5, amount: 8, weight: 30 },
-      { currency: 5, amount: 18, weight: 20 }
+      { currency: 5, amount: 15, weight: 45 },
+      { currency: 5, amount: 25, weight: 35 },
+      { currency: 6, amount: 5, weight: 25 },
+      { currency: 6, amount: 10, weight: 18 }
     ]
   },
   { 
@@ -760,9 +772,10 @@ export const MapData: Map[] = [
     name: "古神陵墓", 
     level: [500, 620],
     drop: [
-      { currency: 5, amount: 12, weight: 45 },
-      { currency: 5, amount: 25, weight: 25 },
-      { currency: 6, amount: 5, weight: 15 }
+      { currency: 5, amount: 25, weight: 45 },
+      { currency: 6, amount: 10, weight: 35 },
+      { currency: 6, amount: 20, weight: 25 },
+      { currency: 7, amount: 4, weight: 15 }
     ]
   },
   { 
@@ -770,9 +783,10 @@ export const MapData: Map[] = [
     name: "混沌领域", 
     level: [620, 750],
     drop: [
-      { currency: 5, amount: 20, weight: 40 },
-      { currency: 6, amount: 10, weight: 30 },
-      { currency: 6, amount: 22, weight: 20 }
+      { currency: 6, amount: 20, weight: 45 },
+      { currency: 6, amount: 35, weight: 35 },
+      { currency: 7, amount: 8, weight: 25 },
+      { currency: 7, amount: 15, weight: 18 }
     ]
   },
   { 
@@ -780,9 +794,10 @@ export const MapData: Map[] = [
     name: "永恒战场", 
     level: [750, 900],
     drop: [
-      { currency: 6, amount: 15, weight: 45 },
-      { currency: 6, amount: 30, weight: 25 },
-      { currency: 7, amount: 8, weight: 15 }
+      { currency: 6, amount: 30, weight: 45 },
+      { currency: 7, amount: 15, weight: 35 },
+      { currency: 7, amount: 30, weight: 25 },
+      { currency: 8, amount: 6, weight: 18 }
     ]
   },
   { 
@@ -790,9 +805,10 @@ export const MapData: Map[] = [
     name: "创世熔炉", 
     level: [900, 1080],
     drop: [
-      { currency: 6, amount: 25, weight: 40 },
-      { currency: 7, amount: 12, weight: 30 },
-      { currency: 7, amount: 28, weight: 20 }
+      { currency: 7, amount: 25, weight: 45 },
+      { currency: 7, amount: 45, weight: 35 },
+      { currency: 8, amount: 10, weight: 25 },
+      { currency: 8, amount: 20, weight: 18 }
     ]
   },
   { 
@@ -800,9 +816,10 @@ export const MapData: Map[] = [
     name: "终焉深渊", 
     level: [1080, 1300],
     drop: [
-      { currency: 7, amount: 20, weight: 45 },
-      { currency: 7, amount: 40, weight: 25 },
-      { currency: 8, amount: 10, weight: 15 }
+      { currency: 7, amount: 40, weight: 45 },
+      { currency: 8, amount: 20, weight: 35 },
+      { currency: 8, amount: 40, weight: 25 },
+      { currency: 9, amount: 8, weight: 18 }
     ]
   },
   { 
@@ -810,9 +827,10 @@ export const MapData: Map[] = [
     name: "天界之门", 
     level: [1300, 1550],
     drop: [
-      { currency: 7, amount: 30, weight: 40 },
-      { currency: 8, amount: 15, weight: 30 },
-      { currency: 8, amount: 35, weight: 20 }
+      { currency: 8, amount: 30, weight: 45 },
+      { currency: 8, amount: 60, weight: 35 },
+      { currency: 9, amount: 15, weight: 25 },
+      { currency: 9, amount: 30, weight: 18 }
     ]
   },
   { 
@@ -820,9 +838,10 @@ export const MapData: Map[] = [
     name: "无尽虚空", 
     level: [1550, 1850],
     drop: [
-      { currency: 8, amount: 25, weight: 45 },
-      { currency: 8, amount: 50, weight: 25 },
-      { currency: 9, amount: 12, weight: 15 }
+      { currency: 8, amount: 50, weight: 45 },
+      { currency: 9, amount: 25, weight: 35 },
+      { currency: 9, amount: 50, weight: 25 },
+      { currency: 10, amount: 10, weight: 18 }
     ]
   },
 ] as const;
@@ -1022,14 +1041,11 @@ export const useGameStore = defineStore("game", {
         // 玩家等级高于怪物，怪物战力衰减
         monsterPowerModified = monsterPower * (1 + levelDifference * 0.05);
       }
-
+      const isWin = Math.random() < (playerPowerModified/(playerPowerModified + monsterPowerModified)); // 模拟战斗结果，50%胜率
       // 战斗判定
-      if (playerPowerModified > monsterPowerModified) {
+      if (isWin) {
         // 玩家胜利
-        const expGain = 1;
-        const goldGain = Math.floor(Math.random() * this.monster.level * 2) + 1;
-
-        this.gainExperience(expGain);
+        this.gainExperience(1);
         // 增加掉落
         this.mapDrop();
         // 清除当前怪物
@@ -1071,7 +1087,6 @@ export const useGameStore = defineStore("game", {
     },
     // 买宝箱
     buyChest(chestId: number): boolean {
-      console.log("购买宝箱", chestId);
       const chest = ChestData.find((c) => c.id === chestId);
       if (!chest) {
         console.error("宝箱不存在");
