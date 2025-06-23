@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, computed } from "vue";
+import { onMounted, computed,h } from "vue";
 import { useGameStore } from "./stores";
 import {
   EquipmentType,
@@ -108,6 +108,7 @@ const handleStartNewLoop = () => {
         <div class="header">
           <!-- <h1>RPG Loop Game</h1> -->
           <n-button @click="gameStore.init()">init()</n-button>
+          <n-button @click="gameStore.mapDrop()">mapDrop()</n-button>
         </div>
 
         <div class="main">
@@ -214,6 +215,40 @@ const handleStartNewLoop = () => {
                       </n-tag>
                     </div>
                   </n-space>
+                </n-space>
+              </n-card>
+            </n-grid-item>
+            <!-- 宝箱信息 -->
+            <n-grid-item span="2">
+              <n-card title="宝箱信息" size="large">
+                <n-space vertical size="large">
+                  <n-data-table
+                    :columns="[
+                      { title: '名称', key: 'name' },
+                      { title: '价格', key: 'price' },
+                      { title: '购买', key: 'action', align: 'right', render: (row) => {
+                          return h(
+                            NButton,
+                            {
+                              strong: true,
+                              tertiary: true,
+                              size: 'small',
+                              onClick: () => gameStore.buyChest(row.id)
+                            },
+                            { default: () => 'BUY' }
+                          )
+                        } },
+                    ]"
+                    :data="
+                      ChestData.map((chest) => ({
+                        name: chest.name,
+                        price: `${CurrencyNames[chest.currency]} * ${chest.price}`,
+                        id: chest.id,
+                      }))
+                    "
+                    :pagination="false"
+                    size="small"
+                  />
                 </n-space>
               </n-card>
             </n-grid-item>

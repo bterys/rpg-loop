@@ -615,27 +615,216 @@ export const RarityData = [
   { id: 19, name: "万古", color: "#FF6347", rand: [] }, // 番茄色
 ] as const;
 export const MapData: Map[] = [
-  { id: 0, name: "新手村", level: [1, 3] },
-  { id: 1, name: "青草平原", level: [3, 8] },
-  { id: 2, name: "幽暗森林", level: [8, 15] },
-  { id: 3, name: "荒芜沙漠", level: [15, 25] },
-  { id: 4, name: "冰霜雪原", level: [25, 40] },
-  { id: 5, name: "火焰山脉", level: [40, 60] },
-  { id: 6, name: "深海遗迹", level: [60, 90] },
-  { id: 7, name: "天空之城", level: [90, 120] },
-  { id: 8, name: "暗影峡谷", level: [120, 160] },
-  { id: 9, name: "龙族禁地", level: [160, 200] },
-  { id: 10, name: "虚空神殿", level: [200, 260] },
-  { id: 11, name: "星陨废墟", level: [260, 320] },
-  { id: 12, name: "时间裂隙", level: [320, 400] },
-  { id: 13, name: "元素风暴", level: [400, 500] },
-  { id: 14, name: "古神陵墓", level: [500, 620] },
-  { id: 15, name: "混沌领域", level: [620, 750] },
-  { id: 16, name: "永恒战场", level: [750, 900] },
-  { id: 17, name: "创世熔炉", level: [900, 1080] },
-  { id: 18, name: "终焉深渊", level: [1080, 1300] },
-  { id: 19, name: "天界之门", level: [1300, 1550] },
-  { id: 20, name: "无尽虚空", level: [1550, 1850] },
+  { 
+    id: 0, 
+    name: "新手村", 
+    level: [1, 3],
+    drop: [
+      { currency: 0, amount: 1, weight: 100 },
+      { currency: 0, amount: 2, weight: 50 },
+      { currency: 0, amount: 3, weight: 20 }
+    ]
+  },
+  { 
+    id: 1, 
+    name: "青草平原", 
+    level: [3, 8],
+    drop: [
+      { currency: 0, amount: 2, weight: 80 },
+      { currency: 0, amount: 5, weight: 40 },
+      { currency: 1, amount: 1, weight: 10 }
+    ]
+  },
+  { 
+    id: 2, 
+    name: "幽暗森林", 
+    level: [8, 15],
+    drop: [
+      { currency: 0, amount: 5, weight: 70 },
+      { currency: 0, amount: 10, weight: 30 },
+      { currency: 1, amount: 1, weight: 20 }
+    ]
+  },
+  { 
+    id: 3, 
+    name: "荒芜沙漠", 
+    level: [15, 25],
+    drop: [
+      { currency: 0, amount: 10, weight: 60 },
+      { currency: 1, amount: 2, weight: 40 },
+      { currency: 1, amount: 5, weight: 15 }
+    ]
+  },
+  { 
+    id: 4, 
+    name: "冰霜雪原", 
+    level: [25, 40],
+    drop: [
+      { currency: 1, amount: 3, weight: 70 },
+      { currency: 1, amount: 8, weight: 25 },
+      { currency: 2, amount: 1, weight: 10 }
+    ]
+  },
+  { 
+    id: 5, 
+    name: "火焰山脉", 
+    level: [40, 60],
+    drop: [
+      { currency: 1, amount: 5, weight: 60 },
+      { currency: 1, amount: 12, weight: 30 },
+      { currency: 2, amount: 2, weight: 15 }
+    ]
+  },
+  { 
+    id: 6, 
+    name: "深海遗迹", 
+    level: [60, 90],
+    drop: [
+      { currency: 1, amount: 10, weight: 50 },
+      { currency: 2, amount: 3, weight: 40 },
+      { currency: 2, amount: 8, weight: 20 }
+    ]
+  },
+  { 
+    id: 7, 
+    name: "天空之城", 
+    level: [90, 120],
+    drop: [
+      { currency: 2, amount: 5, weight: 60 },
+      { currency: 2, amount: 15, weight: 25 },
+      { currency: 3, amount: 2, weight: 10 }
+    ]
+  },
+  { 
+    id: 8, 
+    name: "暗影峡谷", 
+    level: [120, 160],
+    drop: [
+      { currency: 2, amount: 8, weight: 50 },
+      { currency: 2, amount: 20, weight: 30 },
+      { currency: 3, amount: 5, weight: 15 }
+    ]
+  },
+  { 
+    id: 9, 
+    name: "龙族禁地", 
+    level: [160, 200],
+    drop: [
+      { currency: 2, amount: 15, weight: 40 },
+      { currency: 3, amount: 8, weight: 35 },
+      { currency: 3, amount: 15, weight: 20 }
+    ]
+  },
+  { 
+    id: 10, 
+    name: "虚空神殿", 
+    level: [200, 260],
+    drop: [
+      { currency: 3, amount: 10, weight: 50 },
+      { currency: 3, amount: 25, weight: 25 },
+      { currency: 4, amount: 3, weight: 10 }
+    ]
+  },
+  { 
+    id: 11, 
+    name: "星陨废墟", 
+    level: [260, 320],
+    drop: [
+      { currency: 3, amount: 20, weight: 40 },
+      { currency: 4, amount: 5, weight: 35 },
+      { currency: 4, amount: 12, weight: 20 }
+    ]
+  },
+  { 
+    id: 12, 
+    name: "时间裂隙", 
+    level: [320, 400],
+    drop: [
+      { currency: 4, amount: 8, weight: 50 },
+      { currency: 4, amount: 20, weight: 25 },
+      { currency: 5, amount: 4, weight: 15 }
+    ]
+  },
+  { 
+    id: 13, 
+    name: "元素风暴", 
+    level: [400, 500],
+    drop: [
+      { currency: 4, amount: 15, weight: 40 },
+      { currency: 5, amount: 8, weight: 30 },
+      { currency: 5, amount: 18, weight: 20 }
+    ]
+  },
+  { 
+    id: 14, 
+    name: "古神陵墓", 
+    level: [500, 620],
+    drop: [
+      { currency: 5, amount: 12, weight: 45 },
+      { currency: 5, amount: 25, weight: 25 },
+      { currency: 6, amount: 5, weight: 15 }
+    ]
+  },
+  { 
+    id: 15, 
+    name: "混沌领域", 
+    level: [620, 750],
+    drop: [
+      { currency: 5, amount: 20, weight: 40 },
+      { currency: 6, amount: 10, weight: 30 },
+      { currency: 6, amount: 22, weight: 20 }
+    ]
+  },
+  { 
+    id: 16, 
+    name: "永恒战场", 
+    level: [750, 900],
+    drop: [
+      { currency: 6, amount: 15, weight: 45 },
+      { currency: 6, amount: 30, weight: 25 },
+      { currency: 7, amount: 8, weight: 15 }
+    ]
+  },
+  { 
+    id: 17, 
+    name: "创世熔炉", 
+    level: [900, 1080],
+    drop: [
+      { currency: 6, amount: 25, weight: 40 },
+      { currency: 7, amount: 12, weight: 30 },
+      { currency: 7, amount: 28, weight: 20 }
+    ]
+  },
+  { 
+    id: 18, 
+    name: "终焉深渊", 
+    level: [1080, 1300],
+    drop: [
+      { currency: 7, amount: 20, weight: 45 },
+      { currency: 7, amount: 40, weight: 25 },
+      { currency: 8, amount: 10, weight: 15 }
+    ]
+  },
+  { 
+    id: 19, 
+    name: "天界之门", 
+    level: [1300, 1550],
+    drop: [
+      { currency: 7, amount: 30, weight: 40 },
+      { currency: 8, amount: 15, weight: 30 },
+      { currency: 8, amount: 35, weight: 20 }
+    ]
+  },
+  { 
+    id: 20, 
+    name: "无尽虚空", 
+    level: [1550, 1850],
+    drop: [
+      { currency: 8, amount: 25, weight: 45 },
+      { currency: 8, amount: 50, weight: 25 },
+      { currency: 9, amount: 12, weight: 15 }
+    ]
+  },
 ] as const;
 
 // 定义玩家状态接口
@@ -682,6 +871,7 @@ export interface GameState {
   monster?: Monster; // 当前怪物
   log: string[]; // 游戏日志
   other: any;
+  chests: Record<number, number>; // 宝箱数据
 }
 // 定义稀有度接口
 export interface Rarity {
@@ -704,6 +894,7 @@ export interface Map {
   id: number; // 地图ID
   name: string; // 地图名称
   level: number[]; // 地图等级
+  drop: Array<{currency: number; amount: number, weight: number}>; // 掉落物品
 }
 
 // 默认玩家数据
@@ -731,8 +922,9 @@ export const useGameStore = defineStore("game", {
     equipments: [],
     mapNow: -1,
     log: [],
-    monster: undefined, // 当前怪物
+    monster: {level:0,name:'',hp:0,atk:0,def:0,power:0} as Monster, // 当前怪物
     other: {},
+    chests: {}, // 宝箱数据
   }),
 
   getters: {},
@@ -777,19 +969,19 @@ export const useGameStore = defineStore("game", {
           Math.floor(
             Math.random() * (currentMap.level[1] - currentMap.level[0] + 1)
           ) + currentMap.level[0],
-        hp: Math.floor(Math.random() * 20) + 10, // 随机生命值
+        hp: Math.floor(Math.random() * 20), // 随机生命值
         atk: Math.floor(Math.random() * 5) + 1, // 随机攻击力
         def: Math.floor(Math.random() * 3), // 随机防御力
         power: 0,
       } as Monster;
       // 计算怪物的战力
       monster.power = this.calculatePower(monster.atk, 0, monster.hp);
-      this.monster = monster; // 设置当前怪物
+      this.monster = {...monster}; // 设置当前怪物
+      this.monster.level = monster.level; // 确保怪物等级正确
       this.other.lastLoopTime = Date.now(); // 更新上次循环时间
       this.other.time = 5000; // 重置时间
       this.other.lastLoopTime = Date.now(); // 更新上次循环时间
       this.log.push(`生成怪物：${monster.name}（等级：${monster.level}）`);
-      return monster;
     },
     // 战力计算
     calculatePower(atk: number, def: number, hp: number) {
@@ -838,11 +1030,8 @@ export const useGameStore = defineStore("game", {
         const goldGain = Math.floor(Math.random() * this.monster.level * 2) + 1;
 
         this.gainExperience(expGain);
-        this.gainGold(0, goldGain);
-        this.log.push(
-          `战胜了 ${this.monster.name}，获得 ${expGain} 经验和 ${goldGain} 铜币`
-        );
-
+        // 增加掉落
+        this.mapDrop();
         // 清除当前怪物
         this.monster = undefined;
         return true;
@@ -862,18 +1051,46 @@ export const useGameStore = defineStore("game", {
         // this.levelUp();
       }
     },
-
+    mapDrop() {
+      const currentMap = MapData.find((map) => map.id === this.mapNow);
+      if (currentMap) {
+        currentMap.drop.forEach((drop) => {
+          if (Math.random() * 100 < drop.weight) {
+            this.gainGold(drop.currency, drop.amount);
+            this.log.push(
+              `从 ${this.monster?this.monster.name:''} 身上获得了 ${drop.amount} ${CurrencyNames[drop.currency]}`
+            );
+          }
+        });
+      }
+    },
     // 分解装备获得碎片
     getFragments(equipment: Equipment) {
       this.player.fragments += equipment.fragments;
       this.equipments.splice(this.equipments.indexOf(equipment), 1); // 从装备列表中移除
     },
-
+    // 买宝箱
+    buyChest(chestId: number): boolean {
+      console.log("购买宝箱", chestId);
+      const chest = ChestData.find((c) => c.id === chestId);
+      if (!chest) {
+        console.error("宝箱不存在");
+        return false;
+      }
+      // 检查玩家是否有足够的货币
+      if (!this.spendGold(chest.currency, chest.price)) {
+        console.error("金币不足，无法购买宝箱");
+        return false;
+      }
+      // 记录购买的宝箱
+      this.chests[chestId] = (this.chests[chestId] || 0) + 1;
+      this.log.push(`购买了宝箱：${chest.name}`);
+      return true;
+    },
     // 获得金币
     gainGold(idx: number, amount: number) {
       this.player.moneies[idx] += amount;
     },
-
     // 消费金币
     spendGold(idx: number, amount: number): boolean {
       if (this.player.moneies[idx] >= amount) {
