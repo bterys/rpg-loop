@@ -150,7 +150,18 @@ export const RarityData = [
   { id: 18, name: "宇宙", color: "#1E90FF", rand: [] }, // 道奇蓝
   { id: 19, name: "万古", color: "#FF6347", rand: [] }, // 番茄色
 ] as const;
-
+export const MapData: Map[] = [
+  { id: 0, name: "新手村", level: [1, 5] },
+  { id: 1, name: "幽暗森林", level: [5, 15] },
+  { id: 2, name: "荒芜沙漠", level: [15, 30] },
+  { id: 3, name: "冰霜雪原", level: [30, 50] },
+  { id: 4, name: "火焰山脉", level: [50, 75] },
+  { id: 5, name: "深海遗迹", level: [75, 100] },
+  { id: 6, name: "天空之城", level: [100, 150] },
+  { id: 7, name: "暗影峡谷", level: [150, 200] },
+  { id: 8, name: "龙族禁地", level: [200, 300] },
+  { id: 9, name: "虚空神殿", level: [300, 500] }
+] as const;
 
 // 定义玩家状态接口
 export interface Player {
@@ -164,7 +175,16 @@ export interface Player {
   power: number;
   prestige: number;
   moneies: number[];
+  fragments: number; // 可选碎片数量
   equipment: Equipment[]; // 可选装备数组
+}
+export interface Monster {
+  level: number; // 怪物等级
+  name: string; // 怪物名称
+  hp: number; // 怪物生命值
+  atk: number; // 怪物攻击力
+  def: number;
+  power: number; // 怪物战力
 }
 // 定义装备接口
 export interface Equipment {
@@ -174,7 +194,7 @@ export interface Equipment {
   name: string;
   attr: string;
   value: number;
-  price: number; // 价格
+  fragments: number; // 碎片
 }
 // 定义游戏状态接口
 export interface GameState {
@@ -183,6 +203,9 @@ export interface GameState {
   autoSave: boolean;
   lastSaveTime: number;
   equipments: Equipment[];
+  mapNow: number; // 当前地图ID
+  monster?: Monster; // 当前怪物
+  log: string[]; // 游戏日志
 }
 // 定义稀有度接口
 export interface Rarity {
@@ -201,6 +224,11 @@ export interface Chest {
   rarityWeight: number[]; // 稀有度权重
   equipmentTypes: number[]; // 可获得的装备类型
 }
+export interface Map {
+  id: number; // 地图ID
+  name: string; // 地图名称
+  level: number[]; // 地图等级
+}
 
 // 默认玩家数据
 const defaultPlayer: Player = {
@@ -213,6 +241,7 @@ const defaultPlayer: Player = {
   def: 0,
   power: 0,
   prestige: 0,
+  fragments: 0,
   moneies: new Array(50).fill(0),
   equipment: new Array(Object.keys(EquipmentType).length - 1).fill(null), // 初始没有装备
 };
@@ -224,6 +253,9 @@ export const useGameStore = defineStore("game", {
     autoSave: true,
     lastSaveTime: Date.now(),
     equipments: [],
+    mapNow: 0,
+    log: [],
+    monster: undefined, // 当前怪物
   }),
 
   getters: {
@@ -231,14 +263,113 @@ export const useGameStore = defineStore("game", {
   },
 
   actions: {
+    // 进入地图
+    enterMap(mapId: number) {
+      // 检查地图是否存在
+      const targetMap = MapData.find(map => map.id === mapId);
+      if (!targetMap) {
+        console.error("地图不存在");
+        return false;
+      }
+
+      // 检查玩家等级是否符合要求
+      // if (this.player.level < targetMap.level[0]) {
+      //   console.error(`等级不足，需要 ${targetMap.level[0]} 级才能进入 ${targetMap.name}`);
+      //   return false;
+      // }
+
+      // 进入地图
+      this.mapNow = mapId;
+      this.log.push(`进入地图：${targetMap.name}`);
+      return true;
+    },
+    // 根据当前所在地图，生成一个怪物
+    generateMonster() {
+      // 根据当前地图ID生成怪物
+      const currentMap = MapData.find(map => map.id === this.mapNow);
+      if (!currentMap) {
+        console.error("当前地图不存在");
+        return null;
+      }
+
+      // 生成一个怪物（示例）
+      const monster = {
+        name: `怪物-${currentMap.name}`,
+        level: Math.floor(Math.random() * (currentMap.level[1] - currentMap.level[0] + 1)) + currentMap.level[0],
+        hp: Math.floor(Math.random() * 20) + 10, // 随机生命值
+        atk: Math.floor(Math.random() * 5) + 1, // 随机攻击力
+        power: 0
+      } as Monster;
+      // 计算怪物的战力
+      monster.power = this.calculatePower(monster.atk, 0, monster.hp);
+      this.monster = monster; // 设置当前怪物
+      return monster;
+    },
+    // 战力计算
+    calculatePower(atk: number, def: number, hp: number) {
+      // 计算玩家的战力
+      const basePower = atk + def + hp;
+      return basePower;
+      // const equipmentPower = this.player.equipment.reduce((total, equip) => {
+      //   return total + (equip ? equip.value : 0);
+      // }, 0);
+      // this.player.power = basePower + equipmentPower;
+    },
+    // 战斗逻辑
+    battle () {
+      // 玩家power和怪物power比对,
+      if (!this.monster) {
+        console.error("没有可战斗的怪物");
+        return false;
+      }
+      const playerPower = this.calculatePower(this.player.atk, this.player.def, this.player.hp);
+      const monsterPower = this.calculatePower(this.monster.atk, this.monster.def, this.monster.hp); // 怪物战力受等级影响
+      // 根据等级差计算战力修正系数
+      const levelDifference = this.monster.level - this.player.level;
+      let playerPowerModified = playerPower;
+      let monsterPowerModified = monsterPower;
+
+      if (levelDifference > 0) {
+        // 怪物等级高于玩家，怪物战力增强
+        monsterPowerModified = monsterPower * (1 + levelDifference * 0.1);
+      } else if (levelDifference < 0) {
+        // 玩家等级高于怪物，怪物战力衰减
+        monsterPowerModified = monsterPower * (1 + levelDifference * 0.05);
+      }
+
+      // 战斗判定
+      if (playerPowerModified > monsterPowerModified) {
+        // 玩家胜利
+        const expGain = 1;
+        const goldGain = Math.floor(Math.random() * this.monster.level * 2) + 1;
+        
+        this.gainExperience(expGain);
+        this.gainGold(0, goldGain);
+        this.log.push(`战胜了 ${this.monster.name}，获得 ${expGain} 经验和 ${goldGain} 铜币`);
+        
+        // 清除当前怪物
+        this.monster = undefined;
+        return true;
+      } else {
+        // 战斗失败
+        this.log.push(`被 ${this.monster.name} 击败了`);
+        return false;
+      }
+    },
     // 增加经验值
     gainExperience(amount: number) {
       this.player.exp += amount;
-
+      
       // 检查是否可以升级
       while (this.player.exp >= this.player.expMax) {
         // this.levelUp();
       }
+    },
+
+    // 分解装备获得碎片
+    getFragments(equipment: Equipment) {
+      this.player.fragments += equipment.fragments;
+      this.equipments.splice(this.equipments.indexOf(equipment), 1); // 从装备列表中移除
     },
 
     // 获得金币
