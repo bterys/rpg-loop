@@ -164,7 +164,7 @@ export interface Player {
   power: number;
   prestige: number;
   moneies: number[];
-  equipment?: Equipment[]; // 可选装备数组
+  equipment: Equipment[]; // 可选装备数组
 }
 // 定义装备接口
 export interface Equipment {
@@ -213,6 +213,7 @@ const defaultPlayer: Player = {
   power: 0,
   prestige: 0,
   moneies: new Array(50).fill(0),
+  equipment: new Array(Object.keys(EquipmentType).length - 1), // 初始没有装备
 };
 
 export const useGameStore = defineStore("game", {
