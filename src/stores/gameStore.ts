@@ -890,7 +890,7 @@ export interface GameState {
   monster?: Monster; // 当前怪物
   log: string[]; // 游戏日志
   other: any;
-  chests: Record<number, number>; // 宝箱数据
+  chests: [number, number][]; // 宝箱数据
 }
 // 定义稀有度接口
 export interface Rarity {
@@ -943,7 +943,7 @@ export const useGameStore = defineStore("game", {
     log: [],
     monster: {level:0,name:'',hp:0,atk:0,def:0,power:0} as Monster, // 当前怪物
     other: {},
-    chests: {}, // 宝箱数据
+    chests: [], // 宝箱数据
   }),
 
   getters: {},
@@ -1098,7 +1098,17 @@ export const useGameStore = defineStore("game", {
         return false;
       }
       // 记录购买的宝箱
-      this.chests[chestId] = (this.chests[chestId] || 0) + 1;
+      if (this.chests.length > 0) {
+        const lastChestId = this.chests[this.chests.length - 1][0];
+        if (lastChestId === chestId) {
+          this.chests[this.chests.length - 1][1] += 1; // 增加购买数量
+        } else {
+          this.chests.push([chestId, 1]); // 新增宝箱记录
+        }
+      } else {
+        this.chests.push([chestId, 1]); // 新增宝箱记录
+        this.other.chestTime = 5000; // 记录购买时间
+      }
       this.log.push(`购买了宝箱：${chest.name}`);
       return true;
     },
@@ -1113,6 +1123,27 @@ export const useGameStore = defineStore("game", {
         return true;
       }
       return false;
+    },
+    // 开宝箱
+    openChest(chestId: number): boolean {
+      const chest = ChestData.find((c) => c.id === chestId);
+      if (!chest) {
+        console.error("宝箱不存在");
+        return false;
+      }
+      // 模拟开启宝箱
+      const equipment = this.generateEquipment(chest);
+      if (equipment) {
+        this.equipments.push(equipment);
+        this.log.push(`开启了宝箱：${chest.name}，获得了装备：${equipment.name}`);
+        return true;
+      } else {
+        this.log.push(`开启了宝箱：${chest.name}，但没有获得任何装备`);
+        return false;
+      }
+    },
+    generateEquipment(chest: Chest): Equipment {
+      return {} as Equipment; // 这里可以实现具体的装备生成逻辑
     },
     init() {
       console.log("游戏初始化");
@@ -1129,6 +1160,22 @@ export const useGameStore = defineStore("game", {
       }
       if (this.isPaused) {
         return; // 如果游戏暂停，则不执行任何操作
+      }
+
+      if (this.chests.length > 0) {
+        const dt = Date.now() - this.other.lastChestTime;
+        this.other.chestTime = Math.max(0, this.other.chestTime - dt); // 累加宝箱开启时间
+        if (this.other.chestTime <= 0) {
+          const firstChest = this.chests[0];
+          if (firstChest) {
+            this.openChest(firstChest[0]); // 开启最后一个宝箱
+            firstChest[1] -= 1; // 减少宝箱数量
+            if (firstChest[1] <= 0) {
+              this.chests.shift(); // 如果数量为0，则移除宝箱
+              this.other.chestTime = 5000; // 重置宝箱开启时间
+            }
+          }
+        }
       }
       const dt = Date.now() - this.other.lastLoopTime;
       this.other.lastLoopTime = Date.now(); // 更新上次循环时间
