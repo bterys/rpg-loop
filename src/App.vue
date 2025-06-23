@@ -112,10 +112,10 @@ const handleStartNewLoop = () => {
         </div>
 
         <div class="main">
-          <n-grid :cols="5" :x-gap="10" :y-gap="10" responsive="screen">
+          <n-grid :cols="15" :x-gap="10" :y-gap="10" responsive="screen">
             <!-- 玩家信息面板 -->
-            <n-grid-item span="1">
-              <n-card title="玩家信息" size="large">
+            <n-grid-item span="3">
+              <n-card title="玩家信息" size="large" content-style="padding: 10px;">
                 <n-space vertical size="large">
                   <!-- 基本信息 -->
                   <n-grid :cols="2" :x-gap="12" :y-gap="12">
@@ -164,8 +164,8 @@ const handleStartNewLoop = () => {
               </n-card>
             </n-grid-item>
             <!-- 地图信息 -->
-            <n-grid-item span="1">
-              <n-card title="怪物信息" size="large" v-if="gameStore.monster">
+            <n-grid-item span="3">
+              <n-card title="怪物信息" size="large" v-if="gameStore.monster" content-style="padding: 10px;">
                 <n-progress type="line" :percentage="gameStore.other.time/50" :show-indicator="false" />
                 <!-- 基本信息 -->
                 <n-grid :cols="2" :x-gap="12" :y-gap="12">
@@ -194,7 +194,7 @@ const handleStartNewLoop = () => {
                   </n-grid-item>
                 </n-grid>
               </n-card>
-              <n-card title="地图信息" size="large">
+              <n-card title="地图信息" size="large" content-style="padding: 10px;">
                 <n-space vertical size="large">
                   <n-space vertical>
                     <div v-for="map in MapData" :key="map.id">
@@ -219,8 +219,8 @@ const handleStartNewLoop = () => {
               </n-card>
             </n-grid-item>
             <!-- 宝箱信息 -->
-            <n-grid-item span="2">
-              <n-card title="宝箱信息" size="large">
+            <n-grid-item span="4">
+              <n-card title="宝箱信息" size="large" content-style="padding: 10px;">
                 <n-space vertical size="large">
                   <n-data-table
                     :columns="[
@@ -253,8 +253,8 @@ const handleStartNewLoop = () => {
               </n-card>
             </n-grid-item>
             <!-- 装备信息 -->
-            <n-grid-item span="2">
-              <n-card title="装备信息" size="large">
+            <n-grid-item span="5">
+              <n-card title="装备信息" size="large" content-style="padding: 10px;">
                 <n-space vertical size="large">
                   <n-data-table
                     :columns="[
