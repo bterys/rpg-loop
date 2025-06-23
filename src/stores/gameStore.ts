@@ -174,6 +174,7 @@ export interface Equipment {
   name: string;
   attr: string;
   value: number;
+  price: number; // 价格
 }
 // 定义游戏状态接口
 export interface GameState {
@@ -213,107 +214,47 @@ const defaultPlayer: Player = {
   power: 0,
   prestige: 0,
   moneies: new Array(50).fill(0),
-  equipment: new Array(Object.keys(EquipmentType).length - 1), // 初始没有装备
+  equipment: new Array(Object.keys(EquipmentType).length - 1).fill(null), // 初始没有装备
 };
 
 export const useGameStore = defineStore("game", {
   state: (): GameState => ({
     player: { ...defaultPlayer },
-    currentLoop: 0,
-    totalLoops: 0,
-    isGameRunning: false,
     isPaused: false,
-    gameSpeed: 1,
     autoSave: true,
     lastSaveTime: Date.now(),
+    equipments: [],
   }),
 
   getters: {
-    // 获取玩家当前等级进度百分比
-    experienceProgress: (state) => {
-      return (state.player.experience / state.player.experienceToNext) * 100;
-    },
-
-    // 计算玩家总属性值
-    totalStats: (state) => {
-      const { strength, agility, intelligence, vitality } = state.player.stats;
-      return strength + agility + intelligence + vitality;
-    },
-
-    // 检查是否可以升级
-    canLevelUp: (state) => {
-      return state.player.experience >= state.player.experienceToNext;
-    },
+    
   },
 
   actions: {
-    // 开始游戏
-    startGame() {
-      this.isGameRunning = true;
-      this.isPaused = false;
-    },
-
-    // 暂停游戏
-    pauseGame() {
-      this.isPaused = true;
-    },
-
-    // 恢复游戏
-    resumeGame() {
-      this.isPaused = false;
-    },
-
-    // 停止游戏
-    stopGame() {
-      this.isGameRunning = false;
-      this.isPaused = false;
-    },
-
-    // 重置游戏
-    resetGame() {
-      this.player = { ...defaultPlayer };
-      this.currentLoop = 0;
-      this.totalLoops = 0;
-      this.isGameRunning = false;
-      this.isPaused = false;
-      this.gameSpeed = 1;
-    },
-
     // 增加经验值
     gainExperience(amount: number) {
-      this.player.experience += amount;
+      this.player.exp += amount;
 
       // 检查是否可以升级
-      while (this.player.experience >= this.player.experienceToNext) {
-        this.levelUp();
+      while (this.player.exp >= this.player.expMax) {
+        // this.levelUp();
       }
     },
 
     // 获得金币
-    gainGold(amount: number) {
-      this.player.gold += amount;
+    gainGold(idx: number, amount: number) {
+      this.player.moneies[idx] += amount;
     },
 
     // 消费金币
-    spendGold(amount: number): boolean {
-      if (this.player.gold >= amount) {
-        this.player.gold -= amount;
+    spendGold(idx: number, amount: number): boolean {
+      if (this.player.moneies[idx] >= amount) {
+        this.player.moneies[idx] -= amount;
         return true;
       }
       return false;
     },
-
-    // 设置游戏速度
-    setGameSpeed(speed: number) {
-      this.gameSpeed = Math.max(0.1, Math.min(10, speed));
-    },
-
-    // 开始新的循环
-    startNewLoop() {
-      this.currentLoop++;
-      this.totalLoops++;
-    },
-
+    
     // 切换自动保存
     toggleAutoSave() {
       this.autoSave = !this.autoSave;
@@ -324,11 +265,9 @@ export const useGameStore = defineStore("game", {
       try {
         const gameData = {
           player: this.player,
-          currentLoop: this.currentLoop,
-          totalLoops: this.totalLoops,
-          gameSpeed: this.gameSpeed,
           autoSave: this.autoSave,
           lastSaveTime: Date.now(),
+          equipments: this.equipments,
         };
         localStorage.setItem("rpg-loop-save", JSON.stringify(gameData));
         this.lastSaveTime = Date.now();
@@ -349,9 +288,8 @@ export const useGameStore = defineStore("game", {
           // 验证数据完整性
           if (gameData.player && typeof gameData.currentLoop === "number") {
             this.player = { ...defaultPlayer, ...gameData.player };
-            this.currentLoop = gameData.currentLoop || 0;
-            this.totalLoops = gameData.totalLoops || 0;
-            this.gameSpeed = gameData.gameSpeed || 1;
+            this.equipments = gameData.equipments || [];
+            this.isPaused = gameData.isPaused !== undefined ? gameData.isPaused : false;
             this.autoSave =
               gameData.autoSave !== undefined ? gameData.autoSave : true;
             this.lastSaveTime = gameData.lastSaveTime || Date.now();
