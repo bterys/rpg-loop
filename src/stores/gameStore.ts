@@ -887,7 +887,7 @@ export interface GameState {
   lastSaveTime: number;
   equipments: Equipment[];
   mapNow: number; // 当前地图ID
-  monster?: Monster; // 当前怪物
+  monster: Monster; // 当前怪物
   log: string[]; // 游戏日志
   other: any;
   chests: [number, number][]; // 宝箱数据
@@ -928,7 +928,7 @@ const defaultPlayer: Player = {
   power: 0,
   prestige: 0,
   fragments: 0,
-  moneies: new Array(50).fill(0),
+  moneies: new Array(50).fill(10000),
   equipment: new Array(Object.keys(EquipmentType).length - 1).fill(null), // 初始没有装备
 };
 
@@ -995,7 +995,12 @@ export const useGameStore = defineStore("game", {
       } as Monster;
       // 计算怪物的战力
       monster.power = this.calculatePower(monster.atk, 0, monster.hp);
-      this.monster = {...monster}; // 设置当前怪物
+      // this.monster = {...monster}; // 设置当前怪物
+      this.monster.name = monster.name; // 确保怪物名称正确
+      this.monster.hp = monster.hp; // 确保怪物生命值正确
+      this.monster.atk = monster.atk; // 确保怪物攻击力正确
+      this.monster.def = monster.def; // 确保怪物防御力正确
+      this.monster.power = monster.power; // 确保怪物战力正确
       this.monster.level = monster.level; // 确保怪物等级正确
       this.other.lastLoopTime = Date.now(); // 更新上次循环时间
       this.other.time = 5000; // 重置时间
@@ -1049,12 +1054,12 @@ export const useGameStore = defineStore("game", {
         // 增加掉落
         this.mapDrop();
         // 清除当前怪物
-        this.monster = undefined;
+        this.monster.level = 0;
         return true;
       } else {
         // 战斗失败
         this.log.push(`被 ${this.monster.name} 击败了`);
-        this.monster = undefined;
+        this.monster.level = 0;
         return false;
       }
     },
@@ -1143,7 +1148,18 @@ export const useGameStore = defineStore("game", {
       }
     },
     generateEquipment(chest: Chest): Equipment {
-      return {} as Equipment; // 这里可以实现具体的装备生成逻辑
+      const equip: Equipment = new Object() as Equipment;
+      equip.type = chest.equipmentTypes[Math.floor(Math.random() * chest.equipmentTypes.length)];
+      equip.level = Math.floor(Math.random() * 10) + 1; //
+      equip.rarity = Math.floor(Math.random() * 20); // 随机稀有度
+      equip.name = `装备-${equip.type}-${equip.level}`; // 生成装备名称
+      equip.attr = `属性-${equip.type}`; // 生成装备属性
+      equip.value = Math.floor(Math.random() * 100) + 1; //
+      equip.fragments = Math.floor(Math.random() * 10); // 随机碎片数量
+      // 这里可以根据稀有度和类型生成更复杂的装备属性
+      // 例如：根据稀有度生成不同的属性值或附加效果
+      
+      return equip; // 这里可以实现具体的装备生成逻辑
     },
     init() {
       console.log("游戏初始化");
@@ -1180,7 +1196,7 @@ export const useGameStore = defineStore("game", {
       const dt = Date.now() - this.other.lastLoopTime;
       this.other.lastLoopTime = Date.now(); // 更新上次循环时间
       this.other.time = Math.max(0, this.other.time - dt); // 累加时间
-      if (!this.monster) {
+      if (this.monster.level <= 0) {
         this.generateMonster(); // 如果没有怪物，则生成一个新的怪物
         return;
       }
