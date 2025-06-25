@@ -7,11 +7,9 @@ import {
   ChestData,
   RarityData,
   MapData,
-  Equipment as Equ,
 } from "./stores";
 import {
   NConfigProvider,
-  NMessageProvider,
   NCard,
   NGrid,
   NGridItem,
@@ -20,7 +18,6 @@ import {
   NDataTable,
   NTag,
   NButton,
-  useMessage,
 } from "naive-ui";
 
 const gameStore = useGameStore();
@@ -49,57 +46,57 @@ const gameStatusText = computed(() => {
 });
 
 // 测试功能
-const testGainExp = () => {
-  gameStore.gainExperience(50);
-  message.info("获得经验 +50");
-};
+// const testGainExp = () => {
+//   gameStore.gainExperience(50);
+//   message.info("获得经验 +50");
+// };
 
-const testTakeDamage = () => {
-  gameStore.takeDamage(20);
-  message.warning("受到伤害 -20");
-};
+// const testTakeDamage = () => {
+//   gameStore.takeDamage(20);
+//   message.warning("受到伤害 -20");
+// };
 
-const testGainGold = () => {
-  gameStore.gainGold(100);
-  message.success("获得金币 +100");
-};
+// const testGainGold = () => {
+//   gameStore.gainGold(100);
+//   message.success("获得金币 +100");
+// };
 
-const handleSaveGame = () => {
-  const success = gameStore.saveGame();
-  if (success) {
-    message.success("游戏保存成功");
-  } else {
-    message.error("游戏保存失败");
-  }
-};
+// const handleSaveGame = () => {
+//   const success = gameStore.saveGame();
+//   if (success) {
+//     message.success("游戏保存成功");
+//   } else {
+//     message.error("游戏保存失败");
+//   }
+// };
 
-const handleLoadGame = () => {
-  const success = gameStore.loadGame();
-  if (success) {
-    message.success("游戏加载成功");
-  } else {
-    message.error("没有找到存档");
-  }
-};
+// const handleLoadGame = () => {
+//   const success = gameStore.loadGame();
+//   if (success) {
+//     message.success("游戏加载成功");
+//   } else {
+//     message.error("没有找到存档");
+//   }
+// };
 
-const handleDeleteSave = () => {
-  const success = gameStore.deleteSave();
-  if (success) {
-    message.success("存档删除成功");
-  } else {
-    message.error("删除存档失败");
-  }
-};
+// const handleDeleteSave = () => {
+//   const success = gameStore.deleteSave();
+//   if (success) {
+//     message.success("存档删除成功");
+//   } else {
+//     message.error("删除存档失败");
+//   }
+// };
 
-const handleResetGame = () => {
-  gameStore.resetGame();
-  message.info("游戏已重置");
-};
+// const handleResetGame = () => {
+//   gameStore.resetGame();
+//   message.info("游戏已重置");
+// };
 
-const handleStartNewLoop = () => {
-  gameStore.startNewLoop();
-  message.info("开始新循环");
-};
+// const handleStartNewLoop = () => {
+//   gameStore.startNewLoop();
+//   message.info("开始新循环");
+// };
 </script>
 
 <template>
@@ -259,7 +256,13 @@ const handleStartNewLoop = () => {
                 <n-space vertical size="large">
                   <n-data-table
                     :columns="[
-                      { title: '部位', key: 'type' },
+                      { title: '部位', key: 'type', render: (row) => {
+                          return h(
+                            'span',
+                            { style: { fontWeight: 'bold' } },
+                            EquipmentType[row.type as keyof typeof EquipmentType] || '未知部位'
+                          );
+                      }},
                       // { title: '品质', key: 'rarity'},
                       { title: '品质', key: 'rarityText', render: (row) => {
                           return h(
@@ -275,12 +278,18 @@ const handleStartNewLoop = () => {
                           );
                       }},
                       { title: '等级', key: 'level', align: 'right' },
-                      { title: '属性', key: 'attr', align: 'right' },
+                      { title: '属性', key: 'attr', render: (row) => {
+                          return h(
+                            'span',
+                            { style: { fontStyle: 'italic' } },
+                            row.attr +'+'+row.value || '无'
+                          );
+                      }},
                       { title: '对比', key: 'compare', align: 'right', render: (row) => {
                           const current = gameStore.equipments.find(e => e.type === row.type);
-                          if (!current) return h(NTag, { type: 'info' }, { default: () => '未装备' });
+                          if (!current) return h('span', { default: () => '未装备' });
                           return h(
-                            NTag,
+                            'span',
                             {
                               type: current.value > row.value ? 'success' : 'warning',
                             },
@@ -302,10 +311,11 @@ const handleStartNewLoop = () => {
                     ]"
                     :data="gameStore.equipments.map(e => {
                       return {
-                        type: EquipmentType[e.type],
+                        type: e.type,
                         rarity: e.rarity,
                         level: e.level,
-                        attr: `${e.attr} +${e.value}`,
+                        attr: e.attr,
+                        value: e.value,
                         id: e.id,
                       };
                     })"

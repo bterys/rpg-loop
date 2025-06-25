@@ -944,7 +944,7 @@ export const useGameStore = defineStore("game", {
     mapNow: -1,
     log: [],
     monster: {level:0,name:'',hp:0,atk:0,def:0,power:0} as Monster, // 当前怪物
-    other: {eid: 0},
+    other: {eid: 0, chestOpenTime: 2000},
     chests: [], // 宝箱数据
     time: 1000/8,
   }),
@@ -1115,8 +1115,7 @@ export const useGameStore = defineStore("game", {
         }
       } else {
         this.chests.push([chestId, 1]); // 新增宝箱记录
-        this.other.chestTime = 1000; // 记录购买时间
-        console.log(this.chests, this.other)
+        this.other.chestTime = this.other.chestOpenTime; // 记录购买时间
       }
       this.log.push(`购买了宝箱：${chest.name}`);
       return true;
@@ -1253,7 +1252,7 @@ export const useGameStore = defineStore("game", {
               this.chests.shift(); // 如果数量为0，则移除宝箱
             }
           }
-          this.other.chestTime = 2000; // 重置宝箱开启时间
+          this.other.chestTime = this.other.chestOpenTime; // 重置宝箱开启时间
         }
       }
       if (this.mapNow > -1) {
