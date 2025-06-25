@@ -294,7 +294,7 @@ const handleStartNewLoop = () => {
                               strong: true,
                               tertiary: true,
                               size: 'small',
-                              onClick: () => gameStore.equipItem(row)
+                              onClick: () => gameStore.equipItem(row.id)
                             },
                             { default: () => '穿戴' }
                           )
@@ -306,6 +306,7 @@ const handleStartNewLoop = () => {
                         rarity: e.rarity,
                         level: e.level,
                         attr: `${e.attr} +${e.value}`,
+                        id: e.id,
                       };
                     })"
                     :pagination="false"

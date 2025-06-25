@@ -871,6 +871,7 @@ export interface Monster {
 }
 // 定义装备接口
 export interface Equipment {
+  id: number; // 装备ID
   type: number; // 使用 EquipmentType 枚举
   level: number;
   rarity: number; // 稀有度
@@ -943,7 +944,7 @@ export const useGameStore = defineStore("game", {
     mapNow: -1,
     log: [],
     monster: {level:0,name:'',hp:0,atk:0,def:0,power:0} as Monster, // 当前怪物
-    other: {},
+    other: {eid: 0},
     chests: [], // 宝箱数据
     time: 1000/8,
   }),
@@ -1114,7 +1115,7 @@ export const useGameStore = defineStore("game", {
         }
       } else {
         this.chests.push([chestId, 1]); // 新增宝箱记录
-        this.other.chestTime = 5000; // 记录购买时间
+        this.other.chestTime = 1000; // 记录购买时间
         console.log(this.chests, this.other)
       }
       this.log.push(`购买了宝箱：${chest.name}`);
@@ -1167,6 +1168,7 @@ export const useGameStore = defineStore("game", {
           break;
         }
       }
+      equip.id = this.other.eid++; // 生成唯一ID
       equip.rarity = selectedRarity;
       equip.name = `装备-${equip.type}-${equip.level}`; // 生成装备名称
       equip.attr = ['atk','def','hp'][Math.floor(Math.random() * 3)]; // 生成装备属性
@@ -1178,7 +1180,12 @@ export const useGameStore = defineStore("game", {
       return equip; // 这里可以实现具体的装备生成逻辑
     },
     // 穿装备
-    equipItem(equipment: Equipment) {
+    equipItem(equipmentId: number) {
+      console.log("装备ID:", equipmentId);
+      if (equipmentId === undefined || equipmentId === null) {
+        return false;
+      }
+      const equipment = this.equipments.find((e) => e.id === equipmentId);
       if (!equipment) {
         console.error("装备不存在");
         return false;
@@ -1192,24 +1199,43 @@ export const useGameStore = defineStore("game", {
       // 装备新的装备
       this.player.equipment[equipment.type] = equipment;
       this.log.push(`装备了：${equipment.name}`);
+      console.log(equipment);
+      switch (equipment.attr) {
+        case 'atk':
+          this.player.atk += equipment.value; // 增加战力
+          break;
+        case 'def':
+          this.player.def += equipment.value; // 增加防御力
+          break;
+        case 'hp':
+          this.player.hp += equipment.value; // 增加生命值
+          break;
+      }
+      this.equipments.splice(this.equipments.indexOf(equipment), 1); // 从装备列表中移除
+      console.log(this.player.atk, this.player.def, this.player.hp)
       return true;
     },
     // 脱装备
     unequipItem(equipment: Equipment) {
+      console.log("脱装备:", equipment);
       if (!equipment) {
         console.error("装备不存在");
         return false;
       }
-      // 从玩家装备中移除
-      const index = this.player.equipment.indexOf(equipment);
-      if (index !== -1) {
-        this.player.equipment[index] = {} as Equipment; // 设置为null表示未装备
-        this.log.push(`脱下了：${equipment.name}`);
-        return true;
-      } else {
-        console.error("装备未找到");
-        return false;
-      }
+      switch (equipment.attr) {
+        case 'atk':
+          this.player.atk -= equipment.value; // 增加战力
+          break;
+        case 'def':
+          this.player.def -= equipment.value; // 增加防御力
+          break;
+        case 'hp':
+          this.player.hp -= equipment.value; // 增加生命值
+          break;
+      } 
+      this.player.equipment[equipment.type] = {} as Equipment; // 设置为null表示未装备
+      this.equipments.push(equipment); // 将装备放回装备列表
+      this.log.push(`脱下了：${equipment.name}`);
     },
     init() {
       console.log("游戏初始化");
