@@ -944,7 +944,7 @@ export const useGameStore = defineStore("game", {
     mapNow: -1,
     log: [],
     monster: {level:0,name:'',hp:0,atk:0,def:0,power:0} as Monster, // 当前怪物
-    other: {eid: 0, chestOpenTime: 2000},
+    other: {eid: 0, chestOpenTime: 5000},
     chests: [], // 宝箱数据
     time: 1000/8,
   }),

@@ -218,6 +218,10 @@ const gameStatusText = computed(() => {
             </n-grid-item>
             <!-- 宝箱信息 -->
             <n-grid-item span="4">
+              <n-card size="large" content-style="padding: 10px;" v-if="gameStore.chests.length > 0">
+                <div class="progress-label">正在打开{{ ChestData[gameStore.chests[0][0]].name }}</div>
+                <n-progress type="line" :percentage="gameStore.other.chestTime/gameStore.other.chestOpenTime*100" :show-indicator="false" />
+              </n-card>
               <n-card title="宝箱信息" size="large" content-style="padding: 10px;">
                 <n-space vertical size="large">
                   <n-data-table
