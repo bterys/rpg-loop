@@ -1198,8 +1198,6 @@ export const useGameStore = defineStore("game", {
       }
       // 装备新的装备
       this.player.equipment[equipment.type] = equipment;
-      this.log.push(`装备了：${equipment.name}`);
-      console.log(equipment);
       switch (equipment.attr) {
         case 'atk':
           this.player.atk += equipment.value; // 增加战力
@@ -1217,7 +1215,6 @@ export const useGameStore = defineStore("game", {
     },
     // 脱装备
     unequipItem(equipment: Equipment) {
-      console.log("脱装备:", equipment);
       if (!equipment) {
         console.error("装备不存在");
         return false;
@@ -1254,9 +1251,9 @@ export const useGameStore = defineStore("game", {
             firstChest[1] -= 1; // 减少宝箱数量
             if (firstChest[1] <= 0) {
               this.chests.shift(); // 如果数量为0，则移除宝箱
-              this.other.chestTime = 1000; // 重置宝箱开启时间
             }
           }
+          this.other.chestTime = 2000; // 重置宝箱开启时间
         }
       }
       if (this.mapNow > -1) {
