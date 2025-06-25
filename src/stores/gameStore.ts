@@ -891,6 +891,7 @@ export interface GameState {
   log: string[]; // 游戏日志
   other: any;
   chests: [number, number][]; // 宝箱数据
+  time: number; // 游戏时间间隔
 }
 // 定义稀有度接口
 export interface Rarity {
@@ -944,6 +945,7 @@ export const useGameStore = defineStore("game", {
     monster: {level:0,name:'',hp:0,atk:0,def:0,power:0} as Monster, // 当前怪物
     other: {},
     chests: [], // 宝箱数据
+    time: 1000/8,
   }),
 
   getters: {},
@@ -1113,6 +1115,7 @@ export const useGameStore = defineStore("game", {
       } else {
         this.chests.push([chestId, 1]); // 新增宝箱记录
         this.other.chestTime = 5000; // 记录购买时间
+        console.log(this.chests, this.other)
       }
       this.log.push(`购买了宝箱：${chest.name}`);
       return true;
@@ -1147,40 +1150,65 @@ export const useGameStore = defineStore("game", {
         return false;
       }
     },
+    // 生成装备
     generateEquipment(chest: Chest): Equipment {
       const equip: Equipment = new Object() as Equipment;
       equip.type = chest.equipmentTypes[Math.floor(Math.random() * chest.equipmentTypes.length)];
       equip.level = Math.floor(Math.random() * 10) + 1; //
       equip.rarity = Math.floor(Math.random() * 20); // 随机稀有度
       equip.name = `装备-${equip.type}-${equip.level}`; // 生成装备名称
-      equip.attr = `属性-${equip.type}`; // 生成装备属性
+      equip.attr = ['atk','def','hp'][Math.floor(Math.random() * 3)]; // 生成装备属性
       equip.value = Math.floor(Math.random() * 100) + 1; //
       equip.fragments = Math.floor(Math.random() * 10); // 随机碎片数量
       // 这里可以根据稀有度和类型生成更复杂的装备属性
       // 例如：根据稀有度生成不同的属性值或附加效果
-      
+      console.log(equip)
       return equip; // 这里可以实现具体的装备生成逻辑
+    },
+    // 穿装备
+    equipItem(equipment: Equipment) {
+      if (!equipment) {
+        console.error("装备不存在");
+        return false;
+      }
+      // 检查装备类型是否已被占用
+      const existingEquipment = this.player.equipment[equipment.type];
+      if (existingEquipment) {
+        // 如果已有装备，先脱下
+        this.unequipItem(existingEquipment);
+      }
+      // 装备新的装备
+      this.player.equipment[equipment.type] = equipment;
+      this.log.push(`装备了：${equipment.name}`);
+      return true;
+    },
+    // 脱装备
+    unequipItem(equipment: Equipment) {
+      if (!equipment) {
+        console.error("装备不存在");
+        return false;
+      }
+      // 从玩家装备中移除
+      const index = this.player.equipment.indexOf(equipment);
+      if (index !== -1) {
+        this.player.equipment[index] = {} as Equipment; // 设置为null表示未装备
+        this.log.push(`脱下了：${equipment.name}`);
+        return true;
+      } else {
+        console.error("装备未找到");
+        return false;
+      }
     },
     init() {
       console.log("游戏初始化");
       if (this.other.intervalId) {
         clearInterval(this.other.intervalId);
       }
-      this.other.intervalId = setInterval(() => {
-        this.loop();
-      }, 1000 / 33);
+      this.other.intervalId = setInterval(this.loop, 1000 / 12);
     },
     loop() {
-      if (this.mapNow === -1) {
-        return;
-      }
-      if (this.isPaused) {
-        return; // 如果游戏暂停，则不执行任何操作
-      }
-
       if (this.chests.length > 0) {
-        const dt = Date.now() - this.other.lastChestTime;
-        this.other.chestTime = Math.max(0, this.other.chestTime - dt); // 累加宝箱开启时间
+        this.other.chestTime = Math.max(0, this.other.chestTime - this.time); // 累加宝箱开启时间
         if (this.other.chestTime <= 0) {
           const firstChest = this.chests[0];
           if (firstChest) {
@@ -1193,15 +1221,15 @@ export const useGameStore = defineStore("game", {
           }
         }
       }
-      const dt = Date.now() - this.other.lastLoopTime;
-      this.other.lastLoopTime = Date.now(); // 更新上次循环时间
-      this.other.time = Math.max(0, this.other.time - dt); // 累加时间
-      if (this.monster.level <= 0) {
-        this.generateMonster(); // 如果没有怪物，则生成一个新的怪物
-        return;
-      }
-      if (this.other.time <= 0) {
-        this.battle();
+      if (this.mapNow > -1) {
+        this.other.time = Math.max(0, this.other.time - this.time); // 累加时间
+        if (this.monster.level <= 0) {
+          this.generateMonster(); // 如果没有怪物，则生成一个新的怪物
+          return;
+        }
+        if (this.other.time <= 0) {
+          this.battle();
+        }
       }
     },
     // 切换自动保存
@@ -1215,8 +1243,9 @@ export const useGameStore = defineStore("game", {
         const gameData = {
           player: this.player,
           autoSave: this.autoSave,
-          lastSaveTime: Date.now(),
           equipments: this.equipments,
+          cheests: this.chests,
+          mapNow: this.mapNow, // 保存当前地图
         };
         localStorage.setItem("rpg-loop-save", JSON.stringify(gameData));
         this.lastSaveTime = Date.now();
@@ -1238,11 +1267,10 @@ export const useGameStore = defineStore("game", {
           if (gameData.player && typeof gameData.currentLoop === "number") {
             this.player = { ...defaultPlayer, ...gameData.player };
             this.equipments = gameData.equipments || [];
-            this.isPaused =
-              gameData.isPaused !== undefined ? gameData.isPaused : false;
             this.autoSave =
               gameData.autoSave !== undefined ? gameData.autoSave : true;
-            this.lastSaveTime = gameData.lastSaveTime || Date.now();
+            this.chests = gameData.chests || [];
+            this.mapNow = gameData.mapNow || -1; // 恢复当前地图
             return true;
           }
         }

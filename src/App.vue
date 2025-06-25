@@ -7,6 +7,7 @@ import {
   ChestData,
   RarityData,
   MapData,
+  Equipment as Equ,
 } from "./stores";
 import {
   NConfigProvider,
@@ -24,7 +25,7 @@ import {
 
 const gameStore = useGameStore();
 // const message = useMessage();
-
+gameStore.init();
 // 组件挂载时尝试加载存档
 onMounted(() => {
   const loaded = gameStore.loadGame();
@@ -235,7 +236,7 @@ const handleStartNewLoop = () => {
                               size: 'small',
                               onClick: () => gameStore.buyChest(row.id)
                             },
-                            { default: () => 'BUY' }
+                            { default: () => '购买' }
                           )
                         } },
                     ]"
@@ -246,6 +247,47 @@ const handleStartNewLoop = () => {
                         id: chest.id,
                       }))
                     "
+                    :pagination="false"
+                    size="small"
+                  />
+                </n-space>
+              </n-card>
+            </n-grid-item>
+            <!-- 背包信息 -->
+            <n-grid-item span="5">
+              <n-card title="背包信息" size="large" content-style="padding: 10px;">
+                <n-space vertical size="large">
+                  <n-data-table
+                    :columns="[
+                      // { title: 'id', key: 'id' },
+                      { title: '部位', key: 'type' },
+                      // { title: '名称', key: 'name' },
+                      { title: '品质', key: 'rarity' },
+                      { title: '等级', key: 'level', align: 'right' },
+                      { title: '属性', key: 'attr', align: 'right' },
+                      { title: '穿戴', key: 'action', align: 'right', render: (row) => {
+                          return h(
+                            NButton,
+                            {
+                              strong: true,
+                              tertiary: true,
+                              size: 'small',
+                              onClick: () => gameStore.buyChest(row.id)
+                            },
+                            { default: () => '穿戴' }
+                          )
+                        } },
+                    ]"
+                    :data="gameStore.equipments.map(e => {
+                      return {
+                        // id: e.id,
+                        type: EquipmentType[e.type],
+                        // name: e.name,
+                        rarity: RarityData[e.rarity]?.name || '未知',
+                        level: e.level,
+                        attr: `${e.attr} +${e.value}`,
+                      };
+                    })"
                     :pagination="false"
                     size="small"
                   />
