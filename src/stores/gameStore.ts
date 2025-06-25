@@ -1,26 +1,26 @@
 import { defineStore } from "pinia";
 
 export const EquipmentType = {
-  0: "souvenir", // 纪念品
-  1: "Weapon", // 主手武器
-  2: "OffHand", // 副手
-  3: "Armor", // 护甲
-  4: "Accessory", // 饰品
-  5: "Helmet", // 头盔
-  6: "Necklace", // 项链
-  7: "Ring", // 戒指
-  8: "Boots", // 靴子
-  9: "Gloves", // 手套
-  10: "Belt", // 腰带
-  11: "Cloak", // 斗篷
-  12: "Shield", // 盾牌
-  13: "Bracelet", // 手镯
-  14: "Earring", // 耳环
-  15: "Amulet", // 护身符
-  16: "Tome", // 法典
-  17: "Charm", // 符咒
-  18: "Talisman", // 护符
-  19: "Medallion", // 奖章
+  0: "纪念品", // 纪念品
+  1: "主手武器", // 主手武器
+  2: "副手", // 副手
+  3: "护甲", // 护甲
+  4: "饰品", // 饰品
+  5: "头盔", // 头盔
+  6: "项链", // 项链
+  7: "戒指", // 戒指
+  8: "靴子", // 靴子
+  9: "手套", // 手套
+  10: "腰带", // 腰带
+  11: "斗篷", // 斗篷
+  12: "盾牌", // 盾牌
+  13: "手镯", // 手镯
+  14: "耳环", // 耳环
+  15: "护身符", // 护身符
+  16: "法典", // 法典
+  17: "符咒", // 符咒
+  18: "护符", // 护符
+  19: "奖章", // 奖章
 } as const;
 export const EquipmentTypeReverse = {
   souvenir: 0, // 纪念品
@@ -594,7 +594,7 @@ export const ChestData: Chest[] = [
 ] as const;
 export const RarityData = [
   { id: 0, name: "破损", color: "#8B4513", rand: [] }, // 棕色
-  { id: 1, name: "普通", color: "#FFFFFF", rand: [] }, // 白色
+  { id: 1, name: "普通", color: "#000000", rand: [] }, // 白色
   { id: 2, name: "优秀", color: "#00FF00", rand: [] }, // 绿色
   { id: 3, name: "精良", color: "#0080FF", rand: [] }, // 蓝色
   { id: 4, name: "稀有", color: "#8000FF", rand: [] }, // 紫色
@@ -1155,7 +1155,19 @@ export const useGameStore = defineStore("game", {
       const equip: Equipment = new Object() as Equipment;
       equip.type = chest.equipmentTypes[Math.floor(Math.random() * chest.equipmentTypes.length)];
       equip.level = Math.floor(Math.random() * 10) + 1; //
-      equip.rarity = Math.floor(Math.random() * 20); // 随机稀有度
+      // 根据权重随机选择稀有度
+      const totalWeight = chest.rarityWeight.reduce((sum, weight) => sum + weight, 0);
+      let randomValue = Math.random() * totalWeight;
+      let selectedRarity = 0;
+      
+      for (let i = 0; i < chest.rarityWeight.length; i++) {
+        randomValue -= chest.rarityWeight[i];
+        if (randomValue <= 0) {
+          selectedRarity = i;
+          break;
+        }
+      }
+      equip.rarity = selectedRarity;
       equip.name = `装备-${equip.type}-${equip.level}`; // 生成装备名称
       equip.attr = ['atk','def','hp'][Math.floor(Math.random() * 3)]; // 生成装备属性
       equip.value = Math.floor(Math.random() * 100) + 1; //
@@ -1216,7 +1228,7 @@ export const useGameStore = defineStore("game", {
             firstChest[1] -= 1; // 减少宝箱数量
             if (firstChest[1] <= 0) {
               this.chests.shift(); // 如果数量为0，则移除宝箱
-              this.other.chestTime = 5000; // 重置宝箱开启时间
+              this.other.chestTime = 1000; // 重置宝箱开启时间
             }
           }
         }

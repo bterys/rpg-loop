@@ -259,12 +259,34 @@ const handleStartNewLoop = () => {
                 <n-space vertical size="large">
                   <n-data-table
                     :columns="[
-                      // { title: 'id', key: 'id' },
                       { title: '部位', key: 'type' },
-                      // { title: '名称', key: 'name' },
-                      { title: '品质', key: 'rarity' },
+                      // { title: '品质', key: 'rarity'},
+                      { title: '品质', key: 'rarityText', render: (row) => {
+                          return h(
+                            'span',
+                            {
+                              style: {
+                                color: RarityData[row.rarity]?.color || '#000',
+                                fontWeight: 'bold',
+                              },
+                            },
+                            RarityData[row.rarity]?.name || '未知'
+                            
+                          );
+                      }},
                       { title: '等级', key: 'level', align: 'right' },
                       { title: '属性', key: 'attr', align: 'right' },
+                      { title: '对比', key: 'compare', align: 'right', render: (row) => {
+                          const current = gameStore.equipments.find(e => e.type === row.type);
+                          if (!current) return h(NTag, { type: 'info' }, { default: () => '未装备' });
+                          return h(
+                            NTag,
+                            {
+                              type: current.value > row.value ? 'success' : 'warning',
+                            },
+                            { default: () => `当前(${current.rarity})` }
+                          );
+                      }},
                       { title: '穿戴', key: 'action', align: 'right', render: (row) => {
                           return h(
                             NButton,
@@ -272,7 +294,7 @@ const handleStartNewLoop = () => {
                               strong: true,
                               tertiary: true,
                               size: 'small',
-                              onClick: () => gameStore.buyChest(row.id)
+                              onClick: () => gameStore.equipItem(row)
                             },
                             { default: () => '穿戴' }
                           )
@@ -280,10 +302,8 @@ const handleStartNewLoop = () => {
                     ]"
                     :data="gameStore.equipments.map(e => {
                       return {
-                        // id: e.id,
                         type: EquipmentType[e.type],
-                        // name: e.name,
-                        rarity: RarityData[e.rarity]?.name || '未知',
+                        rarity: e.rarity,
                         level: e.level,
                         attr: `${e.attr} +${e.value}`,
                       };
