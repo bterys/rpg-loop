@@ -107,6 +107,8 @@ const gameStatusText = computed(() => {
           <!-- <h1>RPG Loop Game</h1> -->
           <n-button @click="gameStore.init()">init()</n-button>
           <n-button @click="gameStore.mapDrop()">mapDrop()</n-button>
+          <n-button @click="gameStore.other.itemShow = !gameStore.other.itemShow">item</n-button>
+          <n-button @click="gameStore.other.equipShow = !gameStore.other.equipShow">equip</n-button>
         </div>
 
         <div class="main">
@@ -255,7 +257,7 @@ const gameStatusText = computed(() => {
               </n-card>
             </n-grid-item>
             <!-- 背包信息 -->
-            <n-grid-item span="5">
+            <n-grid-item span="5" v-if="gameStore.other.itemShow">
               <n-card title="背包信息" size="large" content-style="padding: 10px;">
                 <n-space vertical size="large">
                   <n-data-table
@@ -330,7 +332,7 @@ const gameStatusText = computed(() => {
               </n-card>
             </n-grid-item>
             <!-- 装备信息 -->
-            <n-grid-item span="5">
+            <n-grid-item span="5" v-if="gameStore.other.equipShow">
               <n-card title="装备信息" size="large" content-style="padding: 10px;">
                 <n-space vertical size="large">
                   <n-data-table
