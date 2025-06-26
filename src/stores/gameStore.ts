@@ -889,7 +889,7 @@ export interface GameState {
   equipments: Equipment[];
   mapNow: number; // 当前地图ID
   monster: Monster; // 当前怪物
-  log: string[]; // 游戏日志
+  logs: string[]; // 游戏日志
   other: any;
   chests: [number, number][]; // 宝箱数据
   time: number; // 游戏时间间隔
@@ -942,9 +942,9 @@ export const useGameStore = defineStore("game", {
     lastSaveTime: Date.now(),
     equipments: [],
     mapNow: -1,
-    log: [],
+    logs: [],
     monster: {level:0,name:'',hp:0,atk:0,def:0,power:0} as Monster, // 当前怪物
-    other: {eid: 0, chestOpenTime: 5000, equipShow: false, itemShow: false},
+    other: {eid: 0, chestOpenTime: 5000, equipShow: false, itemShow: false, logShow: true},
     chests: [], // 宝箱数据
     time: 1000/8,
   }),
@@ -999,7 +999,6 @@ export const useGameStore = defineStore("game", {
       } as Monster;
       // 计算怪物的战力
       monster.power = this.calculatePower(monster.atk, 0, monster.hp);
-      // this.monster = {...monster}; // 设置当前怪物
       this.monster.name = monster.name; // 确保怪物名称正确
       this.monster.hp = monster.hp; // 确保怪物生命值正确
       this.monster.atk = monster.atk; // 确保怪物攻击力正确
@@ -1008,7 +1007,6 @@ export const useGameStore = defineStore("game", {
       this.monster.level = monster.level; // 确保怪物等级正确
       this.other.lastLoopTime = Date.now(); // 更新上次循环时间
       this.other.time = 5000; // 重置时间
-      this.other.lastLoopTime = Date.now(); // 更新上次循环时间
       this.log.push(`生成怪物：${monster.name}（等级：${monster.level}）`);
     },
     // 战力计算
@@ -1062,7 +1060,7 @@ export const useGameStore = defineStore("game", {
         return true;
       } else {
         // 战斗失败
-        this.log.push(`被 ${this.monster.name} 击败了`);
+        this.log(`被 ${this.monster.name} 击败了`);
         this.monster.level = 0;
         return false;
       }
@@ -1070,9 +1068,8 @@ export const useGameStore = defineStore("game", {
     // 增加经验值
     gainExperience(amount: number) {
       this.player.exp += amount;
-
       // 检查是否可以升级
-      while (this.player.exp >= this.player.expMax) {
+      if (this.player.exp >= this.player.expMax) {
         // this.levelUp();
       }
     },
@@ -1082,7 +1079,7 @@ export const useGameStore = defineStore("game", {
         currentMap.drop.forEach((drop) => {
           if (Math.random() * 100 < drop.weight) {
             this.gainGold(drop.currency, drop.amount);
-            this.log.push(
+            this.log(
               `从 ${this.monster?this.monster.name:''} 身上获得了 ${drop.amount} ${CurrencyNames[drop.currency]}`
             );
           }
@@ -1271,7 +1268,13 @@ export const useGameStore = defineStore("game", {
     toggleAutoSave() {
       this.autoSave = !this.autoSave;
     },
-
+    log(message: string) {
+      this.logs.unshift(message);
+      // 保持日志长度不超过100条
+      if (this.log.length > 100) {
+        this.logs.pop();
+      }
+    },
     // 保存游戏状态到本地存储
     saveGame() {
       try {
