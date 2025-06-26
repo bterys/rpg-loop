@@ -1239,7 +1239,7 @@ export const useGameStore = defineStore("game", {
       if (this.other.intervalId) {
         clearInterval(this.other.intervalId);
       }
-      this.other.intervalId = setInterval(this.loop, 1000 / 12);
+      this.other.intervalId = setInterval(this.loop, this.time);
     },
     loop() {
       if (this.chests.length > 0) {
