@@ -930,7 +930,7 @@ const defaultPlayer: Player = {
   power: 0,
   prestige: 0,
   fragments: 0,
-  moneies: new Array(50).fill(10000),
+  moneies: new Array(50).fill(0),
   equipment: new Array(Object.keys(EquipmentType).length - 1).fill(null), // 初始没有装备
 };
 
@@ -949,7 +949,8 @@ export const useGameStore = defineStore("game", {
     time: 1000/8,
   }),
 
-  getters: {},
+  getters: {
+  },
 
   actions: {
     // 进入地图

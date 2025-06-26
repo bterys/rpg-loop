@@ -126,7 +126,7 @@ const gameStatusText = computed(() => {
                     <n-grid-item>
                       <n-statistic
                         label="战力"
-                        :value="gameStore.player.power"
+                        :value="gameStore.calculatePower(gameStore.player.atk, gameStore.player.def, gameStore.player.hp)"
                       />
                     </n-grid-item>
                   </n-grid>
@@ -149,9 +149,9 @@ const gameStatusText = computed(() => {
                       { title: '数量', key: 'amount', align: 'right' },
                     ]"
                     :data="
-                      CurrencyNames.map((currency, idx) => ({
-                        name: currency,
-                        amount: gameStore.player.moneies[idx] | 0,
+                      gameStore.player.moneies.filter(m => m > 0).map((m, idx) => ({
+                        name: CurrencyNames[idx],
+                        amount: m,
                       }))
                     "
                     :pagination="false"
@@ -268,7 +268,7 @@ const gameStatusText = computed(() => {
                           );
                       }},
                       // { title: '品质', key: 'rarity'},
-                      { title: '品质', key: 'rarityText', render: (row) => {
+                      { title: '品质', key: 'rarity', render: (row) => {
                           return h(
                             'span',
                             {
@@ -336,26 +336,38 @@ const gameStatusText = computed(() => {
                   <n-data-table
                     :columns="[
                       { title: '部位', key: 'type' },
-                      { title: '名称', key: 'name' },
-                      { title: '品质', key: 'rarity' },
+                      { title: '品质', key: 'rarity', render: (row) => {
+                          return h(
+                            'span',
+                            {
+                              style: {
+                                color: RarityData[row.rarity]?.color || '#000',
+                                fontWeight: 'bold',
+                              },
+                            },
+                            row.rarity !== undefined ? RarityData[row.rarity]?.name : ''
+                          );
+                      }},
                       { title: '等级', key: 'level', align: 'right' },
-                      { title: '攻击', key: 'atk', align: 'right' },
-                      { title: '防御', key: 'def', align: 'right' },
-                      { title: '体力', key: 'hp', align: 'right' },
+                      { title: '属性', key: 'attr', render: (row) => {
+                          return h(
+                            'span',
+                            { style: { fontStyle: 'italic' } },
+                            row.attr ? (row.attr + '+' + row.value) : ''
+                          );
+                      }},
                     ]"
                     :data="
-                      Object.values(EquipmentType).map((type) => {
-                        const equipment = gameStore.equipments[type];
+                      Object.values(EquipmentType).map((type,idx) => {
+                        const equipment = gameStore.player.equipment[idx];
                         return {
                           type: type,
-                          name: equipment?.name || '未装备',
-                          rarity: equipment?.rarity
-                            ? RarityData[equipment.rarity]?.name || '未知'
-                            : '-',
-                          level: equipment?.level || 0,
-                          atk: equipment?.atk || 0,
-                          def: equipment?.def || 0,
-                          hp: equipment?.hp || 0,
+                          // name: equipment?.name || '未装备',
+                          rarity: equipment?.rarity,
+                          level: equipment?.level || '',
+                          attr: equipment?.attr || null,
+                          value: equipment?.value || null,
+                          id: equipment?.id || null,
                         };
                       })
                     "
