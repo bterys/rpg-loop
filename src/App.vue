@@ -382,7 +382,7 @@ const gameStatusText = computed(() => {
             <!-- 日志信息 -->
             <n-grid-item span="5" v-if="gameStore.other.logShow">
               <n-card title="日志信息" size="large" content-style="padding: 10px;">
-                <n-space vertical size="large" v-for="(log,idx) in gameStore.log" :key="'log'+idx">
+                <n-space vertical size="large" v-for="(log,idx) in gameStore.logs" :key="'log'+idx">
                   <div class="status-label">{{ log }}</div>
                 </n-space>
               </n-card>

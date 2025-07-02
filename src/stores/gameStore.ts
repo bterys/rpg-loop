@@ -973,7 +973,7 @@ export const useGameStore = defineStore("game", {
 
       // 进入地图
       this.mapNow = mapId;
-      this.log.push(`进入地图：${targetMap.name}`);
+      this.log(`进入地图：${targetMap.name}`);
       return true;
     },
     // 根据当前所在地图，生成一个怪物
@@ -1007,7 +1007,7 @@ export const useGameStore = defineStore("game", {
       this.monster.level = monster.level; // 确保怪物等级正确
       this.other.lastLoopTime = Date.now(); // 更新上次循环时间
       this.other.time = 5000; // 重置时间
-      this.log.push(`生成怪物：${monster.name}（等级：${monster.level}）`);
+      this.log(`生成怪物：${monster.name}（等级：${monster.level}）`);
     },
     // 战力计算
     calculatePower(atk: number, def: number, hp: number) {
@@ -1115,7 +1115,7 @@ export const useGameStore = defineStore("game", {
         this.chests.push([chestId, 1]); // 新增宝箱记录
         this.other.chestTime = this.other.chestOpenTime; // 记录购买时间
       }
-      this.log.push(`购买了宝箱：${chest.name}`);
+      this.log(`购买了宝箱：${chest.name}`);
       return true;
     },
     // 获得金币
@@ -1141,10 +1141,10 @@ export const useGameStore = defineStore("game", {
       const equipment = this.generateEquipment(chest);
       if (equipment) {
         this.equipments.push(equipment);
-        this.log.push(`开启了宝箱：${chest.name}，获得了装备：${equipment.name}`);
+        this.log(`开启了宝箱：${chest.name}，获得了装备：${equipment.name}`);
         return true;
       } else {
-        this.log.push(`开启了宝箱：${chest.name}，但没有获得任何装备`);
+        this.log(`开启了宝箱：${chest.name}，但没有获得任何装备`);
         return false;
       }
     },
@@ -1229,7 +1229,7 @@ export const useGameStore = defineStore("game", {
       } 
       this.player.equipment[equipment.type] = {} as Equipment; // 设置为null表示未装备
       this.equipments.push(equipment); // 将装备放回装备列表
-      this.log.push(`脱下了：${equipment.name}`);
+      this.log(`脱下了：${equipment.name}`);
     },
     init() {
       console.log("游戏初始化");
