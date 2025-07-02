@@ -593,26 +593,32 @@ export const ChestData: Chest[] = [
   },
 ] as const;
 export const RarityData = [
-  { id: 0, name: "破损", color: "#8B4513", rand: [] }, // 棕色
-  { id: 1, name: "普通", color: "#000000", rand: [] }, // 白色
-  { id: 2, name: "优秀", color: "#00FF00", rand: [] }, // 绿色
-  { id: 3, name: "精良", color: "#0080FF", rand: [] }, // 蓝色
-  { id: 4, name: "稀有", color: "#8000FF", rand: [] }, // 紫色
-  { id: 5, name: "史诗", color: "#FF8000", rand: [] }, // 橙色
-  { id: 6, name: "传说", color: "#FF0000", rand: [] }, // 红色
-  { id: 7, name: "神话", color: "#FFD700", rand: [] }, // 金色
-  { id: 8, name: "不朽", color: "#FF1493", rand: [] }, // 深粉色
-  { id: 9, name: "永恒", color: "#00FFFF", rand: [] }, // 青色
-  { id: 10, name: "神圣", color: "#FFFF00", rand: [] }, // 亮黄色
-  { id: 11, name: "混沌", color: "#800080", rand: [] }, // 深紫色
-  { id: 12, name: "创世", color: "#C0C0C0", rand: [] }, // 银色
-  { id: 13, name: "终极", color: "#4B0082", rand: [] }, // 靛蓝色
-  { id: 14, name: "超越", color: "#FF69B4", rand: [] }, // 热粉色
-  { id: 15, name: "至尊", color: "#DC143C", rand: [] }, // 深红色
-  { id: 16, name: "无双", color: "#9400D3", rand: [] }, // 紫罗兰色
-  { id: 17, name: "天命", color: "#FF4500", rand: [] }, // 橙红色
-  { id: 18, name: "宇宙", color: "#1E90FF", rand: [] }, // 道奇蓝
-  { id: 19, name: "万古", color: "#FF6347", rand: [] }, // 番茄色
+  { id: 0, name: "破损", color: "#bdbdbd", rand: [] }, // 棕色
+  { id: 1, name: "普通", color: "#212121", rand: [] }, // 白色
+
+  { id: 2, name: "优秀", color: "#a5d6a7", rand: [] }, // 绿色
+  { id: 3, name: "精良", color: "#43a047", rand: [] }, // 蓝色
+  { id: 4, name: "稀有", color: "#1b5e20", rand: [] }, // 紫色
+
+  { id: 5, name: "史诗", color: "#90caf9", rand: [] }, // 橙色
+  { id: 6, name: "传说", color: "#1e88e5", rand: [] }, // 红色
+  { id: 7, name: "神话", color: "#0d47a1", rand: [] }, // 金色
+
+  { id: 8, name: "不朽", color: "#ce93d8", rand: [] }, // 深粉色
+  { id: 9, name: "永恒", color: "#8e24aa", rand: [] }, // 青色
+  { id: 10, name: "神圣", color: "#4a148c", rand: [] }, // 亮黄色
+
+  { id: 11, name: "混沌", color: "#fff59d", rand: [] }, // 深紫色
+  { id: 12, name: "创世", color: "#fdd835", rand: [] }, // 银色
+  { id: 13, name: "终极", color: "#f57f17", rand: [] }, // 靛蓝色
+
+  { id: 14, name: "超越", color: "#ef9a9a", rand: [] }, // 热粉色
+  { id: 15, name: "至尊", color: "#e53935", rand: [] }, // 深红色
+  { id: 16, name: "无双", color: "#b71c1c", rand: [] }, // 紫罗兰色
+
+  { id: 17, name: "天命", color: "#80cbc4", rand: [] }, // 橙红色
+  { id: 18, name: "宇宙", color: "#00897b", rand: [] }, // 道奇蓝
+  { id: 19, name: "万古", color: "#004d40", rand: [] }, // 番茄色
 ] as const;
 export const MapData: Map[] = [
   { 
@@ -845,7 +851,48 @@ export const MapData: Map[] = [
     ]
   },
 ] as const;
-
+const MonsterNames: string[] = [
+  "史莱姆",
+  "野狼",
+  "哥布林",
+  "骷髅兵",
+  "蜘蛛",
+  "食人魔",
+  "巨蝎",
+  "毒蛇",
+  "石头怪",
+  "火焰蝙蝠",
+  "冰霜狼",
+  "沙漠蠕虫",
+  "岩石巨人",
+  "风暴鹰",
+  "暗影刺客",
+  "魔化野猪",
+  "腐尸",
+  "巫师",
+  "地狱犬",
+  "雪怪",
+  "火龙",
+  "冰龙",
+  "暗黑法师",
+  "恶魔领主",
+  "不死骑士",
+  "巨龙",
+  "凤凰",
+  "深海海妖",
+  "虚空恶魔",
+  "远古巨兽",
+  "混沌使者",
+  "光明天使",
+  "黑暗堕天使",
+  "时空守护者",
+  "元素精灵",
+  "创世泰坦",
+  "毁灭之神",
+  "永恒龙王",
+  "虚无吞噬者",
+  "至高主宰"
+];
 // 定义玩家状态接口
 export interface Player {
   name: string;
@@ -987,23 +1034,25 @@ export const useGameStore = defineStore("game", {
 
       // 生成一个怪物（示例）
       const monster = {
-        name: `怪物-${currentMap.name}`,
+        name: MonsterNames.sort(() => Math.random() - 0.5)[0], // 随机选择一个怪物名称
         level:
           Math.floor(
             Math.random() * (currentMap.level[1] - currentMap.level[0] + 1)
           ) + currentMap.level[0],
-        hp: Math.floor(Math.random() * 20), // 随机生命值
-        atk: Math.floor(Math.random() * 5) + 1, // 随机攻击力
-        def: Math.floor(Math.random() * 3), // 随机防御力
+        hp: 1, // 随机生命值
+        atk: 1, // 随机攻击力
+        def: 1, // 随机防御力
         power: 0,
       } as Monster;
+      monster.hp += monster.level * 5 * (Math.random() * monster.level + Math.log10(monster.level));
+      monster.atk += monster.level * 3 * (Math.random() * monster.level + Math.log10(monster.level));
+      monster.def += monster.level * 1 * (Math.random() * monster.level + Math.log10(monster.level));
       // 计算怪物的战力
-      monster.power = this.calculatePower(monster.atk, 0, monster.hp);
       this.monster.name = monster.name; // 确保怪物名称正确
-      this.monster.hp = monster.hp; // 确保怪物生命值正确
-      this.monster.atk = monster.atk; // 确保怪物攻击力正确
-      this.monster.def = monster.def; // 确保怪物防御力正确
-      this.monster.power = monster.power; // 确保怪物战力正确
+      this.monster.hp = Math.floor(monster.hp); // 确保怪物生命值正确
+      this.monster.atk = Math.floor(monster.atk); // 确保怪物攻击力正确
+      this.monster.def = Math.floor(monster.def); // 确保怪物防御力正确
+      this.monster.power = this.calculatePower(this.monster.atk, this.monster.def, this.monster.hp); // 确保怪物战力正确
       this.monster.level = monster.level; // 确保怪物等级正确
       this.other.lastLoopTime = Date.now(); // 更新上次循环时间
       this.other.time = 5000; // 重置时间
@@ -1152,8 +1201,7 @@ export const useGameStore = defineStore("game", {
     generateEquipment(chest: Chest): Equipment {
       const equip: Equipment = new Object() as Equipment;
       equip.type = chest.equipmentTypes[Math.floor(Math.random() * chest.equipmentTypes.length)];
-      equip.level = Math.floor(Math.random() * 10) + 1; //
-      // 根据权重随机选择稀有度
+      equip.level = Math.floor(Math.random() * 10) + 1; // 根据权重随机选择稀有度
       const totalWeight = chest.rarityWeight.reduce((sum, weight) => sum + weight, 0);
       let randomValue = Math.random() * totalWeight;
       let selectedRarity = 0;
